@@ -1,0 +1,23 @@
+# Secrets: never commit. Copy config.example.php to config.php on each server instead.
+gathering_app/config/config.php
+gathering_app_staging/
+.env
+.env.*
+
+# Runtime files written by the site
+gathering_app/storage/logs/*
+gathering_app/storage/mail/*
+!gathering_app/storage/logs/.keep
+!gathering_app/storage/mail/.keep
+
+# Build output (rebuild with: php tools/build_package.php)
+dist/
+
+# Local tools and editor files
+.claude/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

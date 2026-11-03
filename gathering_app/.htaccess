@@ -1,0 +1,2 @@
+# Safety net: if this folder is ever placed inside public_html by mistake, block all web access.
+Require all denied

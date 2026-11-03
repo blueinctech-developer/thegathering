@@ -1,0 +1,77 @@
+# The Gathering — Apache / LiteSpeed configuration (Hostinger)
+
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+ServerSignature Off
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS (Hostinger's CDN sets X-Forwarded-Proto)
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Use the bare domain (remove "www.") — change if the old site used www.
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+  # Block hidden files, backups and anything that should never be served
+  RewriteRule (^|/)\.(?!well-known/) - [F,L]
+  RewriteRule \.(sql|log|ini|env|bak|sh|lock|md|dist|example)$ - [F,L,NC]
+  RewriteRule ^app-location\.php$ - [F,L]
+
+  # --- Old URL redirects go here (see docs/REDIRECT_MAP.csv). Example:
+  # RewriteRule ^old-page/?$ /new-page [R=301,L]
+  # Redirects can also be added without code in Admin > Redirects.
+
+  # Send everything that is not a real file to index.php
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.php [L,QSA]
+</IfModule>
+
+# Only index.php may run as PHP from this folder tree
+<FilesMatch "\.(php|phtml|phar|php\d)$">
+  Require all denied
+</FilesMatch>
+<Files "index.php">
+  Require all granted
+</Files>
+
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header unset X-Powered-By
+  <FilesMatch "\.(css|js|webp|avif|jpg|jpeg|png|gif|svg|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.pdf$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType application/pdf "access plus 1 week"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/javascript application/json application/xml image/svg+xml
+</IfModule>
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+AddType image/webp .webp
+AddType image/avif .avif
+
+ErrorDocument 403 /index.php

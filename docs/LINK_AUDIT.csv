@@ -1,0 +1,19 @@
+link_text,old_destination,found_on,old_status,new_destination,new_status,notes
+ABOUT US,https://thegatheringcof.org/about/,All pages,Working (but SSL expired),/about,200,
+OUTREACH,https://thegatheringcof.org/outreach/,All pages,Working (but SSL expired),/outreach,200,
+CONTACT US,https://thegatheringcof.org/contact-us/,All pages,Working (but SSL expired),/contact (301 from /contact-us),200,
+GIVE (menu button),#,All pages,BROKEN (# placeholder),/give,200,
+YouTube,https://www.youtube.com/@thegatheringcn,All pages footer,Working,https://www.youtube.com/@thegatheringcn,200 (checked),Opens in new tab
+Facebook,#,All pages footer,BROKEN (# placeholder),(hidden until the real link is entered),—,NEED the real Facebook page URL
+Instagram,#,All pages footer,BROKEN (# placeholder),(hidden until the real link is entered),—,NEED the real Instagram URL
+BECOME A PARTNER,https://thegatheringcof.org/event/edutech-expo-shaping-tomorrows-education/,Home,WRONG (demo event),/give,200,
+Learn More,#,Home,BROKEN (# placeholder),/about (Our story),200,
+Partner With Us,#,About; Outreach,BROKEN (# placeholder),/give,200,
+Give to the Cause,#,Outreach,BROKEN (# placeholder),/give,200,
+Contact us (button),#,About; Outreach,BROKEN (# placeholder),/contact,200,
+Visit the Store,https://thegatheringcof.org/shop/,Hidden menu panel,Demo shop,(removed),—,
+info@website.com,mailto:info@website.com,Hidden menu panel,Demo address,(removed),—,
+thegatheringcof@gmail.com,(text only),Contact Us,Not a link,mailto:thegatheringcof@gmail.com,OK,Now clickable in footer and contact page
+Phone +1 (234) 567 890,(text only),Contact Us,Placeholder number,(removed),—,NEED the real phone / WhatsApp number
+Give page demo links (Berlin address; info@example.com; +1 840 841 25 69; AncoraThemes Facebook/Twitter/Dribbble/Instagram; /events/list; /shop),various,Give,WRONG (theme demo),(removed),—,
+NEW SITE AUTOMATED CHECK 3 Nov 2026,—,10 pages crawled,—,—,0 broken,191 links/assets checked incl. external YouTube; no # links; 1 H1 per page; unique titles; meta descriptions on every page

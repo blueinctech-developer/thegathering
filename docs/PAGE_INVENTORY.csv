@@ -1,0 +1,14 @@
+old_url,old_title,purpose,content_summary,images,forms,links,new_url,status
+https://thegatheringcof.org/,The Gathering – Conference,Homepage,"Theme Breaking Territories; 26–28 Nov 2026; Oyo State; countdown; movement beyond an event; mission; why it matters; 4 impact pillars; photos; date/venue",Logo + 5 photos (20251025_*),None,"About, Outreach, Contact; GIVE/Partner/Learn More = # (broken); Become a Partner = demo event",/,Migrated (all text) + redesigned
+https://thegatheringcof.org/about/,About – The Gathering,About,"Who we are, UK registration, COFWO, convener, mission, vision list, Gathering Land, why it matters, Gathering in action (4), impact figures 5,000+/13/20,000+",about-second.webp,None,Partner With Us/Contact us = # (broken),/about,Migrated
+https://thegatheringcof.org/outreach/,OUTREACH – The Gathering,Outreach & funding needs,"Fuel the mission; 4 aid programmes; Gathering Land 2.66 acres; 6 infrastructure items; 2026 impact goals",Logo only,None,Partner With Us/Give to the Cause/Contact us = # (broken),/outreach,Migrated
+https://thegatheringcof.org/give/,Give – The Gathering,Giving,BROKEN — shows theme demo text and a Berlin demo address,Logo,None,Demo theme links,/give,Rebuilt: funding needs + partnership enquiry form; giving details NEEDED
+https://thegatheringcof.org/contact-us/,Contact Us – The Gathering,Contact,"Intro; form; phone (placeholder +1 (234) 567 890 — not migrated); thegatheringcof@gmail.com; Purley Way, Croydon, London CR0 4RG",Logo,Contact (Gravity Forms),mailto,/contact (301 from /contact-us),Migrated (placeholder phone dropped)
+https://thegatheringcof.org/privacy-policy/,Privacy Policy,Privacy,AncoraThemes' own policy (wrong company),—,None,—,/privacy,NOT migrated — needs the ministry's own policy (draft provided unpublished)
+https://thegatheringcof.org/faqs/,FAQs,FAQs,Lorem ipsum demo,—,None,—,/faqs,Not migrated (demo) — appears automatically when real FAQs are added
+https://thegatheringcof.org/speakers/,Speakers,Speakers,Theme demo speakers,Stock photos,None,—,/speakers,Not migrated (demo) — appears when real speakers are added
+"34 other pages (business-forum, concert, fashion-event, gaming-comics, food-festival, shop, cart, checkout, pricing, typography, blog-*, city-events, etc.)",—,Theme demo,Demo content,Demo images,Demo,Demo,(none — 404),Not migrated (demo)
+46 blog posts,—,Theme demo,Demo articles,Demo,—,—,(none — 404),Not migrated (demo)
+59 events (/event/…),—,Theme demo,Demo events,Demo,Tickets (demo),—,(none — 404),Not migrated (demo)
+—,—,New: Registration,Register for The Gathering 2026,—,Registration,—,/register,New (requested in brief) — please confirm
+—,—,New: Gallery,3 albums / 29 real photos with lightbox,29 photos,None,—,/gallery,New

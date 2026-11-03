@@ -1,0 +1,9 @@
+old_url,new_url,type,status,notes
+/about/,/about,301,Automatic,Trailing slash removed by the new site
+/outreach/,/outreach,301,Automatic,
+/give/,/give,301,Automatic,
+/contact-us/,/contact,301,In Admin > Redirects,
+/home/,/,301,In Admin > Redirects,
+/privacy-policy/,/privacy,301,PENDING,Add in Admin > Redirects once the ministry's own privacy policy is published (redirecting to an unpublished page would 404)
+/event/… /shop/ /cart/ /checkout/ /my-account/ /business-forum/ and other demo URLs,(none),410/404,Intentional,These are theme demo pages, not ministry content. They correctly return "not found" so Google drops them. Not redirected to the homepage.
+/wp-admin/ /wp-login.php,(none),404,Intentional,WordPress admin no longer exists; new admin is /admin
