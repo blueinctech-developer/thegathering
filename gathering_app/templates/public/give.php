@@ -31,7 +31,6 @@ $tiers = blocks('partner_tiers'); $streams = blocks('funding_streams'); $total =
         <dl><?php foreach ($total as [$k, $v]): ?><div><dt><?= e($k) ?></dt><dd><?= e($v) ?></dd></div><?php endforeach ?></dl></div>
     <?php endif ?>
     <div class="docs-cta">
-      <?php if (valid_http_url(setting('partnership_docs_url'))): ?><a class="btn btn--ember" href="<?= e(setting('partnership_docs_url')) ?>" target="_blank" rel="noopener noreferrer"><?= icon('download', 18) ?> Download the partnership overview</a><?php endif ?>
       <?php if (setting('funding_note')): ?><p><?= e(setting('funding_note')) ?></p><?php endif ?>
     </div>
   </div>
