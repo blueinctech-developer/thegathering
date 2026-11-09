@@ -1,68 +1,57 @@
-import { Bus, Clock, MapPin, Phone, Ticket } from "@phosphor-icons/react/dist/ssr";
-import { MediaImage } from "@/components/media-image";
-import { getEvent, getList, getSite } from "@/lib/content/queries";
+import { Bus, MapPin } from "@phosphor-icons/react/dist/ssr";
+import { getList, getSite } from "@/lib/content/queries";
 import { telHref } from "@/lib/format";
-import { Reveal } from "./reveal";
+import { ArrowLink } from "./ui";
 
-/** Free bus details: flyer on one side, facts and the numbered pick-up route on the other. */
-export async function BusSection({ id = "bus" }: { id?: string }) {
-  const [site, ev, stops] = await Promise.all([getSite(), getEvent(), getList("busStops")]);
+/** Free bus panel: striped ember panel with the numbered departure board. */
+export async function BusSection({ id = "bus", detailed = false }: { id?: string; detailed?: boolean }) {
+  const [site, stops] = await Promise.all([getSite(), getList("busStops")]);
   if (!stops.length) return null;
 
   return (
-    <section id={id} aria-labelledby={`${id}-h`} className="wrap py-20 md:py-28">
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-        {ev?.busFlyer && (
-          <Reveal className="lg:col-span-5">
-            <div className="overflow-hidden rounded-[var(--radius-card)] bg-surface-2">
-              <MediaImage media={ev.busFlyer} sizes="(min-width: 1024px) 38vw, 100vw" className="h-auto w-full" />
+    <section id={id} aria-labelledby={`${id}-h`} className="wrap pb-24 md:pb-32">
+      <div className="panel-stripes grid gap-10 rounded-[2rem] p-6 sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:p-14">
+        <div>
+          <span className="grid size-12 place-items-center rounded-full bg-card text-ember-deep">
+            <Bus size={24} weight="light" aria-hidden />
+          </span>
+          <h2 id={`${id}-h`} className="t-section mt-6">{site.busHeading}</h2>
+          <p className="t-lead mt-5 max-w-[46ch]">{site.busBody}</p>
+          {detailed ? (
+            site.busDropoff && (
+              <p className="mt-8 flex max-w-[46ch] items-start gap-3 text-ink-2">
+                <MapPin size={20} className="mt-0.5 shrink-0 text-ember-deep" aria-hidden />
+                <span><span className="font-medium text-ink">Drop-off:</span> {site.busDropoff}</span>
+              </p>
+            )
+          ) : (
+            <div className="mt-8">
+              <ArrowLink href="/gathering-2026#bus">Pick-up points and times</ArrowLink>
             </div>
-          </Reveal>
-        )}
-        <div className={ev?.busFlyer ? "lg:col-span-7" : "lg:col-span-12"}>
-          <div className="flex items-center gap-3 text-accent-text">
-            <Bus size={28} weight="light" aria-hidden />
+          )}
+        </div>
+        <div className="card p-5 shadow-[0_24px_60px_-30px_rgb(23_20_15/0.4)] sm:p-7">
+          <div className="flex items-baseline justify-between border-b border-line pb-4">
+            <p className="font-medium">Daily departures</p>
+            <p className="text-sm text-ink-3">{site.busTime}</p>
           </div>
-          <h2 id={`${id}-h`} className="mt-4 text-4xl sm:text-5xl">{site.busHeading}</h2>
-          <p className="mt-5 max-w-[56ch] text-lg text-ink-2">{site.busBody}</p>
-
-          <dl className="mt-10 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-3">
-            {[
-              { Icon: Ticket, label: "Fare", value: site.busFee },
-              { Icon: Clock, label: "Departs", value: site.busTime },
-              { Icon: Phone, label: "Helpline", value: site.helpline, href: site.helpline ? telHref(site.helpline) : undefined },
-            ].map(({ Icon, label, value, href }) => (
-              <div key={label} className="bg-surface p-5">
-                <dt className="flex items-center gap-2 text-sm text-muted">
-                  <Icon size={18} aria-hidden /> {label}
-                </dt>
-                <dd className="mt-2 font-display text-xl font-semibold">
-                  {href ? <a href={href} className="hover:text-accent-text">{value}</a> : value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-
-          <h3 className="mt-12 text-lg font-semibold">Pick-up points</h3>
-          <ol className="relative mt-5 grid gap-x-8 sm:grid-cols-2">
+          <ol className="mt-2">
             {stops.map((s, i) => (
-              <li key={s.id} className="flex items-baseline gap-4 border-t border-line py-3.5">
-                <span className="font-display text-sm font-semibold tabular-nums text-accent-text">{String(i + 1).padStart(2, "0")}</span>
-                <span>
-                  <span className="font-semibold">{s.title}</span>
-                  {s.body && <span className="text-muted">, {s.body}</span>}
-                </span>
+              <li key={s.id} className="flex items-center gap-4 border-b border-line py-3 last:border-0">
+                <span className="grid size-7 shrink-0 place-items-center rounded-full bg-band text-xs tabular-nums">{i + 1}</span>
+                <span className="flex-1">{s.title}</span>
+                <span className="text-right text-sm text-ink-3">{s.body}</span>
               </li>
             ))}
           </ol>
-          {site.busDropoff && (
-            <p className="mt-8 flex items-start gap-3 rounded-[var(--radius-card)] bg-accent-soft p-5 text-ink">
-              <MapPin size={22} className="mt-0.5 shrink-0 text-accent-text" aria-hidden />
-              <span>
-                <strong className="font-semibold">Drop-off:</strong> {site.busDropoff}
-              </span>
-            </p>
-          )}
+          <p className="mt-4 rounded-xl bg-ember-tint px-4 py-3 text-sm">
+            <span className="font-medium">{site.busFee}.</span>{" "}
+            {site.helpline && (
+              <>
+                Helpline <a className="underline underline-offset-2" href={telHref(site.helpline)}>{site.helpline}</a>
+              </>
+            )}
+          </p>
         </div>
       </div>
     </section>

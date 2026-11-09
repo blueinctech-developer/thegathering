@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "Admin sign in", robots: { index: fal
 
 export default function LoginPage() {
   return (
-    <main className="grid min-h-dvh place-items-center px-4 py-12">
+    <main className="grid min-h-dvh place-items-center bg-band px-4 py-12">
       <div className="w-full max-w-sm">
         <Image src="/brand/the-gathering-logo.png" alt="The Gathering" width={635} height={320} className="mx-auto h-14 w-auto invert dark:invert-0" priority />
         <div className="card mt-8 p-6 sm:p-8">

@@ -20,8 +20,8 @@ export default async function PrivacyPage() {
 
   return (
     <article className="wrap max-w-3xl pb-24 pt-12 md:pt-16">
-      <p className="eyebrow">Legal</p>
-      <h1 className="mt-5 text-5xl sm:text-6xl">Privacy policy</h1>
+      <p className="t-label">Legal</p>
+      <h1 className="t-display mt-5">Privacy policy</h1>
       <div className="mt-12 grid gap-10">
         {sections.map(([h, ps]) => (
           <section key={h}>
@@ -34,7 +34,7 @@ export default async function PrivacyPage() {
           </section>
         ))}
       </div>
-      <p className="mt-14 border-t border-line pt-6 text-sm text-muted">
+      <p className="mt-14 border-t border-line pt-6 text-sm text-ink-3">
         This policy is a starting point and should be reviewed by the organisation to confirm it meets UK GDPR and the Data Protection Act 2018.
       </p>
     </article>

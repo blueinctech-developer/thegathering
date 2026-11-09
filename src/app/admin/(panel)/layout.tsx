@@ -43,7 +43,7 @@ export default function PanelLayout({ children }: LayoutProps<"/admin">) {
           </Suspense>
         </div>
       </aside>
-      <main className="min-w-0 px-4 py-8 sm:px-8 lg:px-12 lg:py-10">
+      <main className="min-w-0 bg-band px-4 py-8 sm:px-8 lg:px-12 lg:py-10">
         <div className="mx-auto max-w-5xl">{children}</div>
       </main>
     </div>

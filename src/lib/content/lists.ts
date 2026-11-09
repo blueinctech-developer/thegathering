@@ -9,7 +9,8 @@ export type ListKey =
   | "busStops"
   | "partnerReasons"
   | "partnerTiers"
-  | "governance";
+  | "governance"
+  | "faqs";
 
 export type ListDef = {
   key: ListKey;
@@ -31,6 +32,7 @@ export const LISTS: ListDef[] = [
   { key: "partnerReasons", label: "What partnership makes possible", where: "Partner With Us", titleLabel: "Outcome" },
   { key: "partnerTiers", label: "Ways to partner", where: "Partner With Us", titleLabel: "Name", bodyLabel: "Description", icon: true },
   { key: "governance", label: "Governance principles", where: "About", titleLabel: "Principle" },
+  { key: "faqs", label: "Questions and answers", where: "Home and The Gathering 2026", titleLabel: "Question", bodyLabel: "Answer" },
 ];
 
 export function listDef(key: string): ListDef | undefined {

@@ -21,6 +21,7 @@ import {
 import { defaultSiteSettings } from "@/lib/content/site-settings";
 import type { ListKey } from "@/lib/content/lists";
 import { saveMedia } from "@/lib/media";
+import { FAQS } from "./seed-data";
 
 const UPLOADS = path.join(process.cwd(), "legacy-php", "public_html", "uploads", "2026", "11");
 const ORIGINALS = path.join(process.cwd(), "assets_originals", "preview_site");
@@ -121,6 +122,7 @@ const LIST_SEED: Record<ListKey, { title: string; body?: string; icon?: string }
     { title: "Corporate or Ministry Sponsor", body: "Churches, organisations and businesses supporting a specific outreach or development stream.", icon: "buildings" },
   ],
   governance: [{ title: "Integrity" }, { title: "Accountability" }, { title: "Responsible stewardship" }],
+  faqs: FAQS,
 };
 
 const SPEAKERS: [string, string][] = [

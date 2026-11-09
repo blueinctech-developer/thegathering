@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
-import { PageHeader } from "@/components/site/page-header";
 import { Gallery } from "@/components/site/gallery";
+import { ArrowLink, PageHero, SectionHead } from "@/components/site/ui";
 import { YouTube } from "@/components/site/youtube";
 import { getGallery, getSite } from "@/lib/content/queries";
 
@@ -15,33 +14,26 @@ export default async function MediaPage() {
 
   return (
     <>
-      <PageHeader
-        eyebrow="Media"
-        title="Moments of worship, prayer and care"
-        intro="Photographs from past Gatherings, and video from the ministry's YouTube channel."
-      />
+      <PageHero label="Media" title="Moments of worship, prayer and care." intro="Photographs from past Gatherings, and video from the ministry's YouTube channel." />
 
       {gallery.length > 0 && (
-        <section aria-label="Photo gallery" className="wrap pb-20 md:pb-28">
+        <section aria-label="Photo gallery" className="wrap pb-24 md:pb-32">
           <Gallery photos={gallery} />
         </section>
       )}
 
       {site.videoYoutubeId && (
-        <section aria-labelledby="watch-h" className="border-t border-line bg-surface py-20 md:py-28">
-          <div className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,22rem)_1fr] lg:gap-20">
-            <div className="mx-auto w-full max-w-[22rem]">
+        <section aria-labelledby="watch-h" className="bg-band py-24 md:py-32">
+          <div className="wrap">
+            <SectionHead id="watch-h" title="Watch on YouTube" intro="Messages, conference highlights and ministry updates." />
+            <div className="mx-auto mt-14 w-full max-w-[24rem] rounded-[2rem] bg-card p-3">
               <YouTube id={site.videoYoutubeId} title={site.videoTitle} vertical />
             </div>
-            <div>
-              <h2 id="watch-h" className="max-w-[18ch] text-4xl sm:text-5xl">Watch on YouTube</h2>
-              <p className="mt-5 max-w-[52ch] text-lg text-ink-2">Messages, conference highlights and ministry updates from The Gathering.</p>
-              {site.youtube && (
-                <a href={site.youtube} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-8">
-                  Visit the channel <ArrowUpRight size={18} aria-hidden />
-                </a>
-              )}
-            </div>
+            {site.youtube && (
+              <div className="mt-10 text-center">
+                <ArrowLink href={site.youtube} external>Visit the channel</ArrowLink>
+              </div>
+            )}
           </div>
         </section>
       )}

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { EnvelopeSimple, Globe, MapPin, Phone, WhatsappLogo, YoutubeLogo } from "@phosphor-icons/react/dist/ssr";
 import { EnquiryForm } from "@/components/site/enquiry-form";
-import { PageHeader } from "@/components/site/page-header";
+import { PageHero } from "@/components/site/ui";
 import { getSite } from "@/lib/content/queries";
 import { bareUrl, telHref, waHref } from "@/lib/format";
 import { submitContact } from "../enquiry-actions";
@@ -24,46 +24,50 @@ export default async function ContactPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Contact" title="We would love to hear from you" intro="Get in touch about partnership, prayer, transport to the conference, or anything else." />
+      <PageHero label="Contact" title="We would love to hear from you." intro="Get in touch about partnership, prayer, transport to the conference, or anything else." />
 
-      <section className="wrap grid gap-12 pb-20 md:pb-28 lg:grid-cols-12">
-        <ul className="grid content-start gap-px self-start overflow-hidden rounded-[var(--radius-card)] border border-line bg-line lg:col-span-4">
-          {lines.map(({ Icon, label, value, href, external }) => {
-            const body = (
-              <>
-                <Icon size={22} weight="light" className="mt-0.5 shrink-0 text-accent-text" aria-hidden />
-                <span>
-                  <span className="block text-sm text-muted">{label}</span>
-                  <span className="font-medium break-words">{value}</span>
-                </span>
-              </>
-            );
-            return (
-              <li key={label} className="bg-surface">
-                {href ? (
-                  <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="flex gap-4 p-5 transition-colors hover:bg-surface-2">
-                    {body}
-                  </a>
-                ) : (
-                  <div className="flex gap-4 p-5">{body}</div>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-        <div className="card p-6 sm:p-10 lg:col-span-7 lg:col-start-6">
-          <h2 className="mb-8 text-3xl">Send a message</h2>
-          <EnquiryForm
-            action={submitContact}
-            submitLabel="Send message"
-            fields={[
-              { name: "name", label: "Full name", required: true, autoComplete: "name" },
-              { name: "email", label: "Email", type: "email", required: true, autoComplete: "email" },
-              { name: "phone", label: "Phone", type: "tel", autoComplete: "tel" },
-              { name: "subject", label: "Subject" },
-              { name: "message", label: "Message", type: "textarea", required: true },
-            ]}
-          />
+      <section className="bg-band py-24 md:py-32">
+        <div className="wrap mx-auto grid max-w-6xl gap-5 lg:grid-cols-[1fr_1.6fr]">
+          <ul className="grid content-start gap-3">
+            {lines.map(({ Icon, label, value, href, external }) => {
+              const body = (
+                <>
+                  <span className="grid size-11 shrink-0 place-items-center rounded-full bg-ember-tint text-ember-deep">
+                    <Icon size={20} weight="light" aria-hidden />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-sm text-ink-3">{label}</span>
+                    <span className="break-words">{value}</span>
+                  </span>
+                </>
+              );
+              return (
+                <li key={label}>
+                  {href ? (
+                    <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="card flex items-center gap-4 p-4 transition-transform hover:-translate-y-0.5">
+                      {body}
+                    </a>
+                  ) : (
+                    <div className="card flex items-center gap-4 p-4">{body}</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+          <div className="card p-6 sm:p-10">
+            <h2 className="mb-8 text-3xl">Send a message</h2>
+            <EnquiryForm
+              action={submitContact}
+              submitLabel="Send message"
+              fields={[
+                { name: "name", label: "Full name", required: true, autoComplete: "name" },
+                { name: "email", label: "Email", type: "email", required: true, autoComplete: "email" },
+                { name: "phone", label: "Phone", type: "tel", autoComplete: "tel" },
+                { name: "subject", label: "Subject" },
+                { name: "message", label: "Message", type: "textarea", required: true },
+              ]}
+            />
+          </div>
         </div>
       </section>
     </>
