@@ -17,7 +17,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageHero label="About us" title={site.tagline} intro={site.mission} />
+      <PageHero label="About us" title="A movement of prayer, compassion and impact" intro={site.mission} photo={photo(17)} />
 
       {/* Photo strip */}
       <section aria-label="Photos" className="wrap grid grid-cols-6 gap-3 pb-24">

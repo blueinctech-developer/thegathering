@@ -4,6 +4,8 @@ import { Flame, HandHeart, MapPin, Stethoscope } from "@phosphor-icons/react/dis
 import { MediaImage } from "@/components/media-image";
 import { BusSection } from "@/components/site/bus-section";
 import { Countdown } from "@/components/site/countdown";
+import { Accent } from "@/components/site/accent";
+import { KineticBand } from "@/components/site/kinetic-band";
 import { FaqSection } from "@/components/site/faq";
 import { Reveal } from "@/components/site/reveal";
 import { ArrowLink, SectionHead } from "@/components/site/ui";
@@ -49,24 +51,40 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="panel-glow overflow-hidden">
-        <div className="wrap pb-14 pt-16 text-center md:pt-24">
-          <h1 className="t-hero mx-auto max-w-[11ch]">{ev ? `${ev.theme}.` : site.siteName}</h1>
-          <p className="t-lead mx-auto mt-7 max-w-[44ch]">{site.heroSummary}</p>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <Link href="/gathering-2026" className="pill pill-ember pill-lg">Plan your visit</Link>
-            <Link href="/partner" className="pill pill-line pill-lg">Partner with us</Link>
-          </div>
-          {ev && (
-            <div className="mt-12 flex flex-col items-center gap-5">
-              <p className="text-sm text-ink-3">
-                {ev.name}, {formatDateRange(ev.startsAt, ev.endsAt)}. {ev.locationLabel}.
-              </p>
-              <Countdown startsAt={ev.startsAt.toISOString()} endsAt={ev.endsAt.toISOString()} />
+      {/* Hero: cinematic inset photo panel */}
+      <section className="overflow-hidden">
+        <div className="wrap pt-4 sm:pt-6">
+          <div className="relative isolate overflow-hidden rounded-[2rem] bg-ground text-white">
+            {ev?.hero && (
+              <MediaImage media={ev.hero} fill priority sizes="100vw" className="-z-20 object-cover object-[50%_30%] grayscale-[45%]" alt="" />
+            )}
+            <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(0_0_0/0.82)_0%,rgb(0_0_0/0.55)_50%,rgb(0_0_0/0.2)_100%),linear-gradient(180deg,transparent_55%,rgb(0_0_0/0.75)_100%)]" />
+            <div className="flex min-h-[calc(100dvh-9rem)] flex-col justify-between gap-12 p-6 sm:p-10 lg:p-14">
+              {ev && <p className="t-label !text-white/85">{ev.name}</p>}
+              <div>
+                <h1 className="t-hero max-w-[10ch]">
+                  {ev ? <Accent text={ev.theme} period /> : site.siteName}
+                </h1>
+                <p className="mt-7 max-w-[44ch] text-lg text-white/80 sm:text-xl">{site.heroSummary}</p>
+                <div className="mt-9 flex flex-wrap gap-3">
+                  <Link href="/gathering-2026" className="pill pill-ember pill-lg">Plan your visit</Link>
+                  <Link href="/partner" className="pill pill-light pill-lg">Partner with us</Link>
+                </div>
+              </div>
+              {ev && (
+                <div className="flex flex-col gap-5 border-t border-white/15 pt-6 sm:flex-row sm:items-end sm:justify-between">
+                  <p className="text-sm text-white/75">
+                    <span className="block text-base font-medium text-white">{formatDateRange(ev.startsAt, ev.endsAt)}</span>
+                    {ev.locationLabel}. Free entry.
+                  </p>
+                  <Countdown startsAt={ev.startsAt.toISOString()} endsAt={ev.endsAt.toISOString()} tone="dark" />
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
+
+        {ev && <KineticBand words={[ev.theme, ev.subtitle].filter(Boolean)} />}
 
         {/* Experience cards, scrolling sideways */}
         <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-[max(1rem,calc((100vw_-_1280px)/2_+_2rem))] scroll-px-[max(1rem,calc((100vw_-_1280px)/2_+_2rem))] pb-20">
@@ -161,16 +179,14 @@ export default async function HomePage() {
               </Reveal>
             )}
           </div>
-          <div className="marquee relative mt-10 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
-            <ul className="marquee-track flex w-max gap-3" aria-label="Speakers">
-              {[...speakers, ...speakers].map((s, i) => (
-                <li key={`${s.id}-${i}`} aria-hidden={i >= speakers.length} className="flex items-center gap-2 whitespace-nowrap rounded-full bg-band px-5 py-3">
-                  <span className="text-lg tracking-tight">{s.name}</span>
-                  <span className="text-sm text-ink-3">{s.role}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul className="wrap mt-10 flex flex-wrap justify-center gap-2" aria-label="Speakers">
+            {speakers.map((s) => (
+              <li key={s.id} className="flex items-baseline gap-2 rounded-full bg-card px-5 py-3 ring-1 ring-line">
+                <span className="font-medium tracking-tight">{s.name}</span>
+                <span className="text-sm text-ink-3">{s.role}</span>
+              </li>
+            ))}
+          </ul>
           <div className="mt-10 text-center">
             <ArrowLink href="/gathering-2026#speakers">Full lineup</ArrowLink>
           </div>
@@ -253,16 +269,15 @@ function FeatureCard({
   img: Parameters<typeof MediaImage>[0]["media"] | null;
 }) {
   return (
-    <Reveal className="card flex flex-col p-7 sm:p-10">
-      <div className="flex items-start justify-between gap-6">
-        <span className="grid size-12 place-items-center rounded-full bg-ember-tint text-ember-deep">{icon}</span>
-        {img && (
-          <div className="relative -mr-2 -mt-2 aspect-[4/3] w-40 overflow-hidden rounded-[1.25rem] sm:w-48">
-            <MediaImage media={img} fill sizes="12rem" className="object-cover" />
-          </div>
-        )}
-      </div>
-      <h3 className="mt-8 text-[1.75rem] tracking-tight">{title}</h3>
+    <Reveal className="card group flex flex-col overflow-hidden p-3">
+      {img && (
+        <div className="relative aspect-[16/10] overflow-hidden rounded-[1.4rem] bg-band">
+          <MediaImage media={img} fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+          <span className="absolute left-4 top-4 grid size-12 place-items-center rounded-full bg-card text-ember-deep shadow-lg">{icon}</span>
+        </div>
+      )}
+      <div className="flex flex-1 flex-col p-4 pt-7 sm:p-7">
+      <h3 className="text-[1.9rem]">{title}</h3>
       <p className="mt-3 text-ink-2">{body}</p>
       {points.length > 0 && (
         <ul className="dots mt-6">
@@ -273,6 +288,7 @@ function FeatureCard({
       )}
       <div className="mt-auto pt-8">
         <ArrowLink href={href}>{linkLabel}</ArrowLink>
+      </div>
       </div>
     </Reveal>
   );

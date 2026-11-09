@@ -1,10 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Archivo, Geist } from "next/font/google";
 import "./globals.css";
 
 const geist = Geist({
   variable: "--font-geist",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -21,14 +28,14 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e0d0b" },
+    { media: "(prefers-color-scheme: light)", color: "#f9f7f3" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d0d0c" },
   ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-GB" className={geist.variable}>
+    <html lang="en-GB" className={`${geist.variable} ${archivo.variable}`}>
       <body className="flex min-h-dvh flex-col">{children}</body>
     </html>
   );

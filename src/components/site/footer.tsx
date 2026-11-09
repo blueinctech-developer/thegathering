@@ -16,7 +16,7 @@ export function SiteFooter({ site, eventName }: { site: SiteSettings; eventName?
       {/* Closing call to action */}
       <section aria-labelledby="footer-cta" className="wrap py-24 text-center md:py-32">
         <h2 id="footer-cta" className="t-display mx-auto max-w-[14ch]">
-          {eventName ? `Join us at ${eventName}` : `Join us at ${site.siteName}`}
+          Join us <em>at {eventName ?? site.siteName}.</em>
         </h2>
         <p className="t-lead mx-auto mt-6 max-w-[46ch]">{site.tagline} Free to attend, open to everyone.</p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
@@ -73,7 +73,8 @@ export function SiteFooter({ site, eventName }: { site: SiteSettings; eventName?
         <div className="wrap flex flex-col gap-3 py-6 text-xs text-ink-3 md:flex-row md:items-center md:justify-between">
           <p>© {site.orgName}. {site.registration}.</p>
           <p className="flex items-center gap-3">
-            <Image src="/brand/cofwo-logo.png" alt="" width={585} height={138} className="h-4 w-auto opacity-60 invert dark:invert-0" />
+            <Image src="/brand/cofwo-logo-colour.png" alt="The Chariot of Fire World Outreach" width={585} height={138} className="h-9 w-auto dark:hidden" />
+            <Image src="/brand/cofwo-logo-white.png" alt="The Chariot of Fire World Outreach" width={585} height={138} className="hidden h-9 w-auto dark:block" />
             <span>{site.parentOrg}</span>
             <Link href="/privacy" className="hover:text-ink">Privacy</Link>
           </p>

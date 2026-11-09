@@ -4,7 +4,7 @@ import { ListIcon } from "@/components/icon";
 import { EnquiryForm } from "@/components/site/enquiry-form";
 import { Reveal } from "@/components/site/reveal";
 import { PageHero, SectionHead } from "@/components/site/ui";
-import { getEvent, getFundingStreams, getList, getSite } from "@/lib/content/queries";
+import { getEvent, getFundingStreams, getGallery, getList, getSite } from "@/lib/content/queries";
 import { money } from "@/lib/format";
 import { submitPartnership } from "../enquiry-actions";
 
@@ -14,12 +14,13 @@ export const metadata: Metadata = {
 };
 
 export default async function PartnerPage() {
-  const [site, ev, reasons, tiers, streams] = await Promise.all([
+  const [site, ev, reasons, tiers, streams, gallery] = await Promise.all([
     getSite(),
     getEvent(),
     getList("partnerReasons"),
     getList("partnerTiers"),
     getFundingStreams(),
+    getGallery(),
   ]);
   const total = streams.reduce(
     (t, s) => ({ ngn: t.ngn + s.amountNgn, gbp: t.gbp + s.amountGbp, usd: t.usd + s.amountUsd }),
@@ -28,9 +29,9 @@ export default async function PartnerPage() {
 
   return (
     <>
-      <PageHero label="Partner with us" title={site.partnerHeading + "."} intro={site.partnerIntro}>
+      <PageHero label="Partner with us" title={`${site.partnerHeading} in the work`} intro={site.partnerIntro} photo={gallery[8] ?? gallery[0]}>
         <a href="#enquire" className="pill pill-ember pill-lg">Send an enquiry</a>
-        <a href="#streams" className="pill pill-line pill-lg">Funding streams</a>
+        <a href="#streams" className="pill pill-light pill-lg">Funding streams</a>
       </PageHero>
 
       {reasons.length > 0 && (

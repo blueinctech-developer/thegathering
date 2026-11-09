@@ -18,7 +18,8 @@ export default async function MinistriesPage() {
     <>
       <PageHero
         label="Ministries and outreach"
-        title="Serving both soul and body."
+        title="Serving both soul and body"
+        photo={photo(6)}
         intro="The Gathering is a spiritual conference and a programme of community care. Prayer, compassion and practical support go together."
       />
 

@@ -18,7 +18,7 @@ export default async function LandPage() {
 
   return (
     <>
-      <PageHero label="The Gathering Land" title={site.landHeading} intro={paragraphs(site.landBody)[0]} />
+      <PageHero label="The Gathering Land" title={site.landHeading} intro={paragraphs(site.landBody)[0]} photo={gallery[9] ?? gallery[0]} />
 
       <section aria-label="Land at a glance" className="wrap pb-24">
         <div className="grid gap-4 lg:grid-cols-[1.1fr_1fr]">

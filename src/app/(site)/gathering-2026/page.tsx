@@ -6,7 +6,7 @@ import { Countdown } from "@/components/site/countdown";
 import { FaqSection } from "@/components/site/faq";
 import { Reveal } from "@/components/site/reveal";
 import { PageHero, SectionHead } from "@/components/site/ui";
-import { getEvent, getList, getProgramme, getSite, getSpeakers } from "@/lib/content/queries";
+import { getEvent, getGallery, getList, getProgramme, getSite, getSpeakers } from "@/lib/content/queries";
 import { formatDateRange, formatDay } from "@/lib/format";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -28,13 +28,14 @@ function initials(name: string) {
 }
 
 export default async function GatheringPage() {
-  const [site, ev, days, speakers, expect, faqs] = await Promise.all([
+  const [site, ev, days, speakers, expect, faqs, gallery] = await Promise.all([
     getSite(),
     getEvent(),
     getProgramme(),
     getSpeakers(),
     getList("expect"),
     getList("faqs"),
+    getGallery(),
   ]);
 
   const jsonLd = ev && {
@@ -55,8 +56,8 @@ export default async function GatheringPage() {
   return (
     <>
       {jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />}
-      <PageHero label={ev?.name} title={ev ? `${ev.theme}.` : "The Gathering"} intro={ev?.summary}>
-        {ev && <Countdown startsAt={ev.startsAt.toISOString()} endsAt={ev.endsAt.toISOString()} />}
+      <PageHero label={ev?.name} title={ev ? ev.theme : "The Gathering"} intro={ev?.summary} photo={gallery[1] ?? ev?.hero}>
+        {ev && <Countdown startsAt={ev.startsAt.toISOString()} endsAt={ev.endsAt.toISOString()} tone="dark" />}
       </PageHero>
 
       {ev && (

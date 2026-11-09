@@ -14,7 +14,7 @@ export default async function MediaPage() {
 
   return (
     <>
-      <PageHero label="Media" title="Moments of worship, prayer and care." intro="Photographs from past Gatherings, and video from the ministry's YouTube channel." />
+      <PageHero label="Media" title="Moments of worship, prayer and care" intro="Photographs from past Gatherings, and video from the ministry's YouTube channel." photo={gallery[18] ?? gallery[0]} />
 
       {gallery.length > 0 && (
         <section aria-label="Photo gallery" className="wrap pb-24 md:pb-32">

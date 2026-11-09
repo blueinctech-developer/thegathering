@@ -24,7 +24,7 @@ export default async function ContactPage() {
 
   return (
     <>
-      <PageHero label="Contact" title="We would love to hear from you." intro="Get in touch about partnership, prayer, transport to the conference, or anything else." />
+      <PageHero label="Contact" title="We would love to hear from you" intro="Get in touch about partnership, prayer, transport to the conference, or anything else." />
 
       <section className="bg-band py-24 md:py-32">
         <div className="wrap mx-auto grid max-w-6xl gap-5 lg:grid-cols-[1fr_1.6fr]">

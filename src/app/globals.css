@@ -6,42 +6,42 @@
   tracking. One brand family: "ember", the warm light of the flame in the logo.
 */
 :root {
-  --canvas: #ffffff;
-  --band: #f5f5f4;
+  --canvas: #f9f7f3;
+  --band: #f1eee8;
   --card: #ffffff;
-  --ink: #17140f;
-  --ink-2: #4a4741;
-  --ink-3: #75716a;
-  --line: #e8e7e3;
-  --ground: #17140f; /* dark feature sections */
+  --ink: #121212;
+  --ink-2: #45433f;
+  --ink-3: #74716b;
+  --line: #e4e0d8;
+  --ground: #121212; /* dark feature sections */
 
-  --ember: #ff8a4c; /* glow */
-  --ember-deep: #b5410f; /* text and icons on light */
-  --ember-tint: #fff1e8; /* panel wash */
-  --ember-light: #ffe0cc;
-  --on-ember: #17140f;
+  --ember: #c8101c; /* COFWO red */
+  --ember-deep: #b00e19; /* text and icons on light */
+  --ember-tint: #fbebe7; /* panel wash */
+  --ember-light: #f6cfc8;
+  --on-ember: #ffffff;
 
-  --stripe: rgb(255 138 76 / 0.16);
+  --stripe: rgb(200 16 28 / 0.09);
   --accent: var(--ember-deep);
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --canvas: #0e0d0b;
-    --band: #151412;
-    --card: #1b1a17;
-    --ink: #f3f1ec;
-    --ink-2: #c4c0b8;
-    --ink-3: #8f8b83;
-    --line: #2a2825;
-    --ground: #1f1b16;
-    --ember: #ff9a62;
-    --ember-deep: #ffab7c;
-    --ember-tint: #241811;
-    --ember-light: #3a2416;
-    --on-ember: #17140f;
-    --stripe: rgb(255 154 98 / 0.1);
+    --canvas: #0d0d0c;
+    --band: #161514;
+    --card: #1c1b19;
+    --ink: #f4f2ee;
+    --ink-2: #c6c2bb;
+    --ink-3: #8f8b84;
+    --line: #2b2926;
+    --ground: #161514;
+    --ember: #e5262f;
+    --ember-deep: #ff6b6f;
+    --ember-tint: #2a1414;
+    --ember-light: #4a1c1c;
+    --on-ember: #ffffff;
+    --stripe: rgb(229 38 47 / 0.12);
     color-scheme: dark;
   }
 }
@@ -73,7 +73,7 @@
   --radius-card: 1.25rem;
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 
   --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -94,12 +94,14 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 800;
     letter-spacing: -0.035em;
-    line-height: 1.04;
+    line-height: 0.98;
     text-wrap: balance;
   }
-  h3, h4 { letter-spacing: -0.02em; line-height: 1.2; }
+  h3, h4 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  /* Accent phrase inside a heading: light italic, as on the COFWO site */
+  h1 em, h2 em, h3 em, .t-hero em, .t-display em, .t-section em { font-style: italic; font-weight: 400; letter-spacing: -0.03em; }
   p { text-wrap: pretty; }
   :focus-visible {
     outline: 2px solid var(--ember-deep);
@@ -119,17 +121,21 @@
   }
 
   /* Type scale */
-  .t-hero { font-size: clamp(3rem, 9.4vw, 7.5rem); line-height: 0.98; letter-spacing: -0.045em; }
-  .t-display { font-size: clamp(2.4rem, 5.6vw, 4.5rem); line-height: 1.02; letter-spacing: -0.04em; }
-  .t-section { font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.05; letter-spacing: -0.035em; }
+  .t-hero { font-family: var(--font-display); font-weight: 800; font-size: clamp(3rem, 8.6vw, 7.25rem); line-height: 0.92; letter-spacing: -0.045em; }
+  .t-display { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 5.6vw, 4.75rem); line-height: 0.96; letter-spacing: -0.04em; }
+  .t-section { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 4.2vw, 3.5rem); line-height: 1; letter-spacing: -0.035em; }
   .t-lead { font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.55; color: var(--ink-2); }
   .t-label {
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ember-deep);
   }
+
+  /* Giant kinetic lettering */
+  .t-kinetic { font-family: var(--font-display); font-weight: 900; font-size: clamp(4rem, 11vw, 10rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap; }
+  .t-outline { color: transparent; -webkit-text-stroke: 2px var(--ink); }
 
   /* Pills */
   .pill {
@@ -140,9 +146,10 @@
     min-height: 2.75rem;
     padding: 0.6rem 1.35rem;
     border-radius: 999px;
-    font-size: 0.975rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     line-height: 1;
     white-space: nowrap;
     text-decoration: none;
@@ -150,9 +157,9 @@
     cursor: pointer;
   }
   .pill:active { transform: scale(0.98); }
-  .pill-lg { min-height: 3.5rem; padding: 0.9rem 1.9rem; font-size: 1.0625rem; }
+  .pill-lg { min-height: 3.4rem; padding: 0.9rem 1.8rem; font-size: 0.85rem; }
   .pill-ink { background: var(--ink); color: var(--canvas); }
-  .pill-ink:hover { box-shadow: 0 10px 24px -10px rgb(23 20 15 / 0.45); }
+  .pill-ink:hover { box-shadow: 0 10px 24px -10px rgb(18 18 18 / 0.45); }
   .pill-ember { background: var(--ember); color: var(--on-ember); }
   .pill-ember:hover { box-shadow: 0 12px 28px -10px var(--ember); }
   .pill-line { background: transparent; color: var(--ink); border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); }
