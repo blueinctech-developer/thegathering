@@ -1,23 +1,62 @@
-# Secrets: never commit. Copy config.example.php to config.php on each server instead.
-gathering_app/config/config.php
-gathering_app_staging/
-.env
-.env.*
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Runtime files written by the site
-gathering_app/storage/logs/*
-gathering_app/storage/mail/*
-!gathering_app/storage/logs/.keep
-!gathering_app/storage/mail/.keep
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# Build output (rebuild with: php tools/build_package.php)
-dist/
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Local database and uploads (development only)
+/.data/
+
+# Legacy PHP secrets
+legacy-php/gathering_app/config/config.php
 
 # Local tools and editor files
 .claude/
-__pycache__/
-*.pyc
-.DS_Store
-Thumbs.db
 .vscode/
 .idea/
+Thumbs.db
+__pycache__/
+*.pyc
+
+# Legacy PHP runtime files
+legacy-php/gathering_app/storage/logs/*
+legacy-php/gathering_app/storage/mail/*
+!legacy-php/gathering_app/storage/logs/.keep
+!legacy-php/gathering_app/storage/mail/.keep

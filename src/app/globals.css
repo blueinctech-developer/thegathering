@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+/*
+  The Gathering design tokens.
+  Ink and stone neutrals with one flame accent (a nod to The Chariot of Fire World Outreach).
+  Light and dark follow the visitor's system setting.
+*/
+:root {
+  --bg: #f4f4f2;
+  --surface: #fbfbfa;
+  --surface-2: #ebebe7;
+  --ink: #141517;
+  --ink-2: #3d3f44;
+  --muted: #62656b;
+  --line: #dcdcd7;
+  --accent: #c2410c;
+  --accent-ink: #ffffff;
+  --accent-soft: #f6e3d8;
+  --accent-text: #a8380a;
+  --scrim: 12 13 15;
+  --focus: #c2410c;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1012;
+    --surface: #16171a;
+    --surface-2: #1d1f23;
+    --ink: #ecece8;
+    --ink-2: #c3c4c0;
+    --muted: #94969b;
+    --line: #2b2d32;
+    --accent: #f26a3a;
+    --accent-ink: #120a06;
+    --accent-soft: #2a1912;
+    --accent-text: #ff8a5e;
+    --focus: #ff8a5e;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-text: var(--accent-text);
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-face), var(--font-body), ui-sans-serif, sans-serif;
+
+  --radius-card: 1.25rem;
+  --radius-btn: 999px;
+
+  --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    text-wrap: balance;
+    font-variation-settings: "opsz" 96;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  a { text-underline-offset: 0.2em; }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 1320px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2.5rem);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: var(--radius-btn);
+    font-weight: 600;
+    font-size: 0.975rem;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: transform 0.2s var(--ease-out-quint), background-color 0.2s, color 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+  .btn:active { transform: translateY(1px) scale(0.99); }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { background: color-mix(in srgb, var(--accent) 88%, var(--ink)); }
+  .btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .btn-secondary:hover { border-color: var(--ink); }
+  .btn-glass {
+    color: #fff;
+    background: rgb(255 255 255 / 0.12);
+    border: 1px solid rgb(255 255 255 / 0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .btn-glass:hover { background: rgb(255 255 255 / 0.22); }
+
+  .link {
+    color: var(--accent-text);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
+
+  .eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+  }
+
+  .prose-site p + p { margin-top: 1em; }
+  .prose-site { color: var(--ink-2); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+  }
+
+  /* Form fields (site and admin) */
+  .field-label { display: block; font-weight: 600; font-size: 0.9375rem; margin-bottom: 0.4rem; color: var(--ink); }
+  .field-help { font-size: 0.875rem; color: var(--muted); margin-top: 0.35rem; }
+  .field-error { font-size: 0.875rem; color: #b42318; margin-top: 0.35rem; font-weight: 600; }
+  .input {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 0.95rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .input:hover { border-color: color-mix(in srgb, var(--line) 50%, var(--ink)); }
+  .input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+  .input::placeholder { color: var(--muted); }
+  textarea.input { min-height: 9rem; resize: vertical; line-height: 1.55; }
+  select.input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 2.5rem; }
+  @media (prefers-color-scheme: dark) {
+    .field-error { color: #f97066; }
+  }
+}
+
+/* Marquee (used once, for the speakers lineup) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee 48s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
