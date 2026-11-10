@@ -12,7 +12,8 @@
     "db:seed": "tsx scripts/seed.ts",
     "admin:create": "tsx scripts/create-admin.ts",
     "vercel-build": "tsx scripts/migrate.ts && tsx scripts/seed.ts && tsx scripts/bootstrap-admin.ts && next build",
-    "db:local": "pglite-server --db=.data/pglite --port=5433 --max-connections=10"
+    "db:local": "pglite-server --db=.data/pglite --port=5433 --max-connections=10",
+    "neon:push": "tsx scripts/push-to-neon.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1164.0",
