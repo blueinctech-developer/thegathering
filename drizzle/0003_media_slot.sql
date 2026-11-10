@@ -1,0 +1,1 @@
+ALTER TABLE "media" ADD COLUMN "slot" text DEFAULT '' NOT NULL;

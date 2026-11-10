@@ -1,19 +1,19 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Flame, HandHeart, MapPin, Stethoscope } from "@phosphor-icons/react/dist/ssr";
 import { MediaImage } from "@/components/media-image";
 import { ListIcon } from "@/components/icon";
 import { BusSection } from "@/components/site/bus-section";
-import { Countdown } from "@/components/site/countdown";
-import { Accent } from "@/components/site/accent";
-import { KineticBand } from "@/components/site/kinetic-band";
+import { HomeHero } from "@/components/site/home-hero";
 import { FaqSection } from "@/components/site/faq";
 import { Reveal } from "@/components/site/reveal";
 import { ArrowLink, SectionHead } from "@/components/site/ui";
 import { YouTube } from "@/components/site/youtube";
-import { getEvent, getFundingStreams, getGallery, getList, getSite, getSpeakers } from "@/lib/content/queries";
+import type { MediaRef } from "@/lib/content/queries";
+import { getEvent, getFundingStreams, getGallery, getList, getSite, getSlotImages, getSpeakers } from "@/lib/content/queries";
 import { paragraphs } from "@/lib/content/site-settings";
-import { formatDateRange, money } from "@/lib/format";
+import { money } from "@/lib/format";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [site, ev] = await Promise.all([getSite(), getEvent()]);
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [site, ev, impact, speakers, gallery, expect, medical, landVision, tiers, streams, faqs, highlights] = await Promise.all([
+  const [site, ev, impact, speakers, gallery, expect, medical, landVision, tiers, streams, faqs, highlights, slots] = await Promise.all([
     getSite(),
     getEvent(),
     getList("impact"),
@@ -39,88 +39,25 @@ export default async function HomePage() {
     getFundingStreams(),
     getList("faqs"),
     getList("highlights"),
+    getSlotImages(),
   ]);
   const photo = (i: number) => gallery[i] ?? gallery[0] ?? null;
   const heroFlyer = ev?.flyer ?? ev?.hero ?? null;
   const totalNgn = streams.reduce((t, s) => t + s.amountNgn, 0);
 
-  const experiences = [
-    { label: "Worship and prayer", title: "Intercession, revival, healing and restoration", img: photo(0) },
-    { label: "Medical outreach", title: "Free screening and medication for up to 5,000 people", img: photo(2) },
-    { label: "Heart of Compassion", title: "Community feeding for vulnerable families", img: photo(5) },
-    { label: "Ministers and speakers", title: "Ministry from invited speakers and ministers", img: photo(10) },
-    { label: "The Gathering Land", title: "Permanent land development in Ido LGA, Oyo State", img: photo(12) },
-  ];
+  // Only real photos that show what the card describes. The library has no medical, feeding or land
+  // photos yet, so those use an icon panel, and the land uses a frame from the ministry's land video.
+  const landArt: Visual | null = site.videoYoutubeId
+    ? { kind: "url", src: `https://i.ytimg.com/vi/${site.videoYoutubeId}/oardefault.jpg`, alt: "Aerial view of The Gathering Land", position: "50% 100%", zoomFromBottom: 1.45 }
+    : null;
+  const media = (i: number): Visual | null => (photo(i) ? { kind: "media", media: photo(i)! } : null);
 
   return (
     <>
-      {/* Hero: headline beside the official programme flyer, shown whole (its own text stays readable) */}
       <section className="overflow-hidden">
-        <div className="wrap pt-4 sm:pt-6">
-          <div className="relative isolate overflow-hidden rounded-[2rem] bg-[#17110f] text-white">
-            <span
-              aria-hidden
-              className="absolute inset-0 -z-10 bg-[radial-gradient(70%_80%_at_85%_20%,rgb(124_29_26/0.55),transparent_70%),radial-gradient(50%_60%_at_0%_100%,rgb(213_161_60/0.14),transparent_70%)]"
-            />
-            <div className="grid gap-10 p-6 sm:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12 lg:p-14">
-              <div>
-                {ev && <p className="t-label !text-gold">{ev.name}</p>}
-                <h1 className="mt-6 max-w-[10ch] text-[clamp(2.9rem,6vw,5.75rem)] leading-[0.92]">
-                  {ev ? <Accent text={ev.theme} period /> : site.siteName}
-                </h1>
-                <p className="mt-6 max-w-[44ch] text-lg text-white/80">{site.heroSummary}</p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Link href="/gathering-2026" className="pill pill-gold pill-lg">Plan your visit</Link>
-                  <Link href="/partner" className="pill pill-light pill-lg">Partner with us</Link>
-                </div>
-              </div>
-              {heroFlyer && (
-                <a
-                  href={`/media/${heroFlyer.key}`}
-                  target="_blank"
-                  rel="noopener"
-                  className="group relative block overflow-hidden rounded-[1.5rem] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8)] ring-1 ring-white/15"
-                >
-                  <MediaImage
-                    media={heroFlyer}
-                    priority
-                    sizes="(min-width: 1024px) 55vw, 100vw"
-                    className="h-auto w-full transition-transform duration-700 group-hover:scale-[1.015]"
-                  />
-                  <span className="sr-only">Open the full programme flyer</span>
-                </a>
-              )}
-            </div>
-            {ev && (
-              <div className="flex flex-col gap-5 border-t border-white/10 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-14">
-                <p className="text-sm text-white/70">
-                  <span className="block text-base font-medium text-white">{formatDateRange(ev.startsAt, ev.endsAt)}</span>
-                  {ev.locationLabel}. Free entry.
-                </p>
-                <Countdown startsAt={ev.startsAt.toISOString()} endsAt={ev.endsAt.toISOString()} tone="dark" />
-              </div>
-            )}
-          </div>
-        </div>
+        <HomeHero ev={ev} site={site} art={heroFlyer} speakers={speakers} />
 
-        {ev && <KineticBand words={[ev.theme, ev.subtitle].filter(Boolean)} />}
 
-        {/* Experience cards, scrolling sideways */}
-        <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-[max(1rem,calc((100vw_-_1280px)/2_+_2rem))] scroll-px-[max(1rem,calc((100vw_-_1280px)/2_+_2rem))] pb-20">
-          {experiences.map((x, i) => (
-            <Reveal key={x.label} delay={i * 0.06} className="w-[82vw] max-w-[26rem] shrink-0 snap-start sm:w-[24rem]">
-              <article className="panel-stripes flex h-full flex-col rounded-[1.75rem] p-5 pt-6">
-                <p className="t-label px-1">{x.label}</p>
-                <h2 className="mt-2 px-1 text-[1.35rem] tracking-tight">{x.title}</h2>
-                {x.img && (
-                  <div className="relative mt-5 aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-card shadow-[0_18px_40px_-24px_rgb(23_20_15/0.45)] ring-4 ring-card">
-                    <MediaImage media={x.img} fill sizes="(min-width: 640px) 24rem, 82vw" className="object-cover" />
-                  </div>
-                )}
-              </article>
-            </Reveal>
-          ))}
-        </div>
       </section>
 
       {/* What happens at The Gathering: large white cards on a grey band */}
@@ -139,7 +76,7 @@ export default async function HomePage() {
               points={expect.slice(0, 3).map((e) => e.title)}
               href="/gathering-2026"
               linkLabel="See the programme"
-              img={photo(1)}
+              visual={media(1)}
             />
             <FeatureCard
               icon={<Stethoscope size={26} weight="light" />}
@@ -148,7 +85,7 @@ export default async function HomePage() {
               points={medical.slice(0, 3).map((m) => m.title)}
               href="/ministries"
               linkLabel="See our outreach"
-              img={photo(3)}
+              visual={slots.medical ? { kind: "media", media: slots.medical } : { kind: "icon", icon: "medical", lines: [site.medicalTarget, "Free screening and medication"] }}
             />
             <FeatureCard
               icon={<HandHeart size={26} weight="light" />}
@@ -157,7 +94,7 @@ export default async function HomePage() {
               points={["Food distribution for vulnerable families", "Practical support for those in need", "Care during and beyond the conference"]}
               href="/ministries"
               linkLabel="How we serve"
-              img={photo(7)}
+              visual={slots.compassion ? { kind: "media", media: slots.compassion } : { kind: "icon", icon: "compassion", lines: ["Community feeding", "During and beyond the conference"] }}
             />
             <FeatureCard
               icon={<MapPin size={26} weight="light" />}
@@ -166,7 +103,7 @@ export default async function HomePage() {
               points={landVision.slice(0, 3).map((v) => v.title)}
               href="/land"
               linkLabel="See the vision"
-              img={photo(12)}
+              visual={landArt}
             />
           </div>
         </div>
@@ -259,7 +196,7 @@ export default async function HomePage() {
           </div>
           {totalNgn > 0 && (
             <p className="mt-14 text-center">
-              <span className="t-display block tabular-nums text-gold">{money.ngn(totalNgn)}</span>
+              <span className="t-display block tabular-nums text-gold">{site.fundingTotalNgn || money.ngn(totalNgn)}</span>
               <span className="mt-2 block text-white/60">to build, equip and serve at {ev?.name ?? site.siteName}</span>
             </p>
           )}
@@ -292,7 +229,7 @@ function FeatureCard({
   points,
   href,
   linkLabel,
-  img,
+  visual,
 }: {
   icon: React.ReactNode;
   title: string;
@@ -300,14 +237,16 @@ function FeatureCard({
   points: string[];
   href: string;
   linkLabel: string;
-  img: Parameters<typeof MediaImage>[0]["media"] | null;
+  visual: Visual | null;
 }) {
   return (
     <Reveal className="card group flex flex-col overflow-hidden p-3">
-      {img && (
+      {visual && (
         <div className="relative aspect-[16/10] overflow-hidden rounded-[1.4rem] bg-band">
-          <MediaImage media={img} fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
-          <span className="absolute left-4 top-4 grid size-12 place-items-center rounded-full bg-card text-ember-deep shadow-lg">{icon}</span>
+          <VisualFill visual={visual} sizes="(min-width: 1024px) 40vw, 100vw" />
+          {visual.kind !== "icon" && (
+            <span className="absolute left-4 top-4 grid size-12 place-items-center rounded-full bg-card text-ember-deep shadow-lg">{icon}</span>
+          )}
         </div>
       )}
       <div className="flex flex-1 flex-col p-4 pt-7 sm:p-7">
@@ -325,5 +264,45 @@ function FeatureCard({
       </div>
       </div>
     </Reveal>
+  );
+}
+
+type Visual =
+  | { kind: "media"; media: MediaRef }
+  | { kind: "url"; src: string; alt: string; position?: string; zoomFromBottom?: number }
+  | { kind: "icon"; icon: "medical" | "compassion"; lines: string[] };
+
+/** Fills its (relative, sized) parent with a photo, a remote frame, or a maroon icon panel. */
+function VisualFill({ visual, sizes }: { visual: Visual; sizes: string }) {
+  if (visual.kind === "media") {
+    return <MediaImage media={visual.media} fill sizes={sizes} className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />;
+  }
+  if (visual.kind === "url") {
+    return (
+      <Image
+        src={visual.src}
+        alt={visual.alt}
+        fill
+        sizes={sizes}
+        className="object-cover"
+        style={{
+          objectPosition: visual.position ?? "50% 50%",
+          // Crops into the lower part of the frame (used to keep a video's burned-in caption out of view).
+          ...(visual.zoomFromBottom ? { transform: `scale(${visual.zoomFromBottom})`, transformOrigin: "50% 100%" } : {}),
+        }}
+      />
+    );
+  }
+  const Icon = visual.icon === "medical" ? Stethoscope : HandHeart;
+  return (
+    <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-ember p-6 text-center text-white">
+      <span aria-hidden className="absolute inset-0 bg-[radial-gradient(70%_70%_at_50%_0%,rgb(213_161_60/0.28),transparent_70%)]" />
+      <Icon size={64} weight="light" className="relative text-gold" aria-hidden />
+      <ul className="relative flex flex-wrap justify-center gap-2">
+        {visual.lines.map((l) => (
+          <li key={l} className="rounded-full bg-white/12 px-3 py-1.5 text-sm ring-1 ring-white/20">{l}</li>
+        ))}
+      </ul>
+    </div>
   );
 }

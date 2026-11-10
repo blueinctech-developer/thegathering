@@ -9,6 +9,12 @@ export const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif
 export const DOC_TYPES = ["application/pdf"];
 export const MAX_UPLOAD_BYTES = 15 * 1024 * 1024;
 
+/** Named places on the site that show a chosen photo. */
+export const MEDIA_SLOTS: { key: string; label: string }[] = [
+  { key: "medical", label: "Medical outreach" },
+  { key: "compassion", label: "Heart of Compassion" },
+];
+
 export function mediaUrl(m: Pick<Media, "key"> | null | undefined): string | null {
   return m ? `/media/${m.key}` : null;
 }
@@ -24,6 +30,7 @@ export async function saveMedia(input: {
   alt?: string;
   inGallery?: boolean;
   sortOrder?: number;
+  slot?: string;
 }): Promise<Media> {
   const { filename } = input;
   let { data, contentType } = input;
@@ -60,6 +67,7 @@ export async function saveMedia(input: {
       alt: input.alt ?? "",
       inGallery: input.inGallery ?? false,
       sortOrder: input.sortOrder ?? 0,
+      slot: input.slot ?? "",
     })
     .returning();
   return row;

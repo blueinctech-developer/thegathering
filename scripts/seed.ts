@@ -21,7 +21,7 @@ import {
 import { defaultSiteSettings } from "@/lib/content/site-settings";
 import type { ListKey } from "@/lib/content/lists";
 import { saveMedia } from "@/lib/media";
-import { FAQS } from "./seed-data";
+import { FAQS, STOCK } from "./seed-data";
 
 const UPLOADS = path.join(process.cwd(), "legacy-php", "public_html", "uploads", "2026", "11");
 const ORIGINALS = path.join(process.cwd(), "assets_originals", "preview_site");
@@ -152,22 +152,22 @@ const PROGRAMME: { label: string; day: string; title: string; items: string[] }[
   { label: "Day 3", day: "2026-11-29", title: "Healing and commissioning", items: ["Healing service", "Closing commission"] },
 ];
 
-const STREAMS: [string, string, number, number, number][] = [
-  ["Territory Foundation", "", 18_500_000, 11_563, 15_417],
-  ["Worship & Sound Infrastructure", "", 30_000_000, 18_750, 25_000],
-  ["Power & Light Development", "", 25_000_000, 15_625, 20_833],
-  ["Safety & Security", "", 15_000_000, 9_375, 12_500],
-  ["Comfort & Crowd Support", "", 12_500_000, 7_813, 10_417],
-  ["Compassion & Medical Outreach", "", 10_000_000, 6_250, 8_333],
-  ["Hospitality & Programme Operations", "", 20_000_000, 12_500, 16_667],
-  ["Publicity & Programme Growth", "", 2_000_000, 1_250, 1_667],
+const STREAMS: [string, string, number, number, number, string][] = [
+  ["Territory Foundation", "", 18_500_000, 11_563, 15_417, "#8b0000"],
+  ["Worship & Sound Infrastructure", "", 30_000_000, 18_750, 25_000, "#4a148c"],
+  ["Power & Light Development", "", 25_000_000, 15_625, 20_833, "#e65100"],
+  ["Safety & Security", "", 15_000_000, 9_375, 12_500, "#1b5e20"],
+  ["Comfort & Crowd Support", "", 12_500_000, 7_813, 10_417, "#006064"],
+  ["Compassion & Medical Outreach", "", 10_000_000, 6_250, 8_333, "#880e4f"],
+  ["Hospitality & Programme Operations", "", 20_000_000, 12_500, 16_667, "#33691e"],
+  ["Publicity & Programme Growth", "", 2_000_000, 1_250, 1_667, "#1a237e"],
 ];
 
-async function upload(file: string, alt: string, inGallery: boolean, sortOrder = 0) {
+async function upload(file: string, alt: string, inGallery: boolean, sortOrder = 0, slot = "") {
   const data = await readFile(file);
   const ext = path.extname(file).toLowerCase();
   const contentType = ext === ".png" ? "image/png" : ext === ".webp" ? "image/webp" : "image/jpeg";
-  return saveMedia({ data, filename: path.basename(file), contentType, alt, inGallery, sortOrder });
+  return saveMedia({ data, filename: path.basename(file), contentType, alt, inGallery, sortOrder, slot });
 }
 
 async function main() {
@@ -199,6 +199,8 @@ async function main() {
     "Join the bus flyer: free buses to and from The Gathering, 27 to 29 November at 8 AM",
     false,
   );
+
+  for (const s of STOCK) await upload(path.join(process.cwd(), "assets_originals", "stock", s.file), s.alt, false, 0, s.slot);
 
   await db.insert(settings).values({ key: "site", value: defaultSiteSettings });
 
@@ -234,12 +236,13 @@ async function main() {
   }
 
   await db.insert(fundingStreams).values(
-    STREAMS.map(([title, summary, amountNgn, amountGbp, amountUsd], i) => ({
+    STREAMS.map(([title, summary, amountNgn, amountGbp, amountUsd, color], i) => ({
       title,
       summary,
       amountNgn,
       amountGbp,
       amountUsd,
+      color,
       sortOrder: (i + 1) * 10,
     })),
   );

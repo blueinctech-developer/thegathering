@@ -45,7 +45,7 @@ export function MobileMenu({
         {open ? <X size={24} /> : <List size={24} />}
       </button>
       {open && (
-        <div id="mobile-nav" className="fixed inset-x-0 bottom-0 top-[4.5rem] z-40 overflow-y-auto bg-canvas px-4 pb-10 pt-6">
+        <div id="mobile-nav" className="fixed inset-x-0 bottom-0 top-20 z-40 overflow-y-auto bg-canvas px-4 pb-10 pt-6">
           <nav aria-label="Main">
             <ul className="grid gap-1">
               {items.map((item) => (

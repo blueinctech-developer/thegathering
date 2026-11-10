@@ -12,7 +12,7 @@ export const siteSettingsSchema = z.object({
   orgName: str("The Gathering International Christian Network"),
   tagline: str("Inspire. Impact. Empower."),
   metaDescription: str(
-    "The Gathering is an annual interdenominational prayer and compassion conference in Ibadan, Oyo State, Nigeria, uniting worship, medical outreach and community care.",
+    "The Gathering is an annual interdenominational prayer and compassion conference in Ido, Oyo State, Nigeria, uniting worship, medical outreach and community care.",
   ),
 
   heroSummary: str("Annual interdenominational prayer and compassion conference. Reaching up to 5,000 people through medical and compassion outreach."),
@@ -64,6 +64,10 @@ export const siteSettingsSchema = z.object({
 
   partnerHeading: str("Stand with us in The Move of the Spirit"),
   partnerIntro: str("The Gathering continues to grow in impact and reach. The scale of this work now requires the support of committed partners who share the vision."),
+  fundingTotalNgn: str("₦133,000,000"),
+  fundingTotalGbp: str("£83,125"),
+  fundingTotalUsd: str("$110,833"),
+  partnerDocsUrl: str("https://drive.google.com/drive/u/0/folders/17andQG8HPetyNSHIRYT59MVy0o8OkLdK"),
   fundingNote: str("Exchange rates are planning estimates."),
   givingNote: str("For all giving enquiries, please contact thegatheringcof@gmail.com. No bank details, payment links, or tax relief claims are published on this site."),
   programmeNote: str("The full programme is to be confirmed and updated by the ministry team."),
@@ -158,6 +162,10 @@ export const siteSettingsGroups: { title: string; fields: { key: keyof SiteSetti
     fields: [
       { key: "partnerHeading", label: "Heading" },
       { key: "partnerIntro", label: "Introduction", long: true },
+      { key: "fundingTotalNgn", label: "Total funding (NGN)", help: "Leave blank to add up the streams automatically." },
+      { key: "fundingTotalGbp", label: "Total funding (GBP)" },
+      { key: "fundingTotalUsd", label: "Total funding (USD)" },
+      { key: "partnerDocsUrl", label: "Partnership documents link", help: "Where the download buttons go when no PDF is uploaded for a stream (e.g. a Google Drive folder)." },
       { key: "fundingNote", label: "Funding note" },
       { key: "givingNote", label: "Giving note", long: true },
       { key: "programmeNote", label: "Programme note", long: true },

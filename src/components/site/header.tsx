@@ -18,10 +18,10 @@ export function SiteHeader({ siteName, announcement }: { siteName: string; annou
           </Link>
         </div>
       )}
-      <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur-xl">
-        <div className="wrap flex h-[4.5rem] items-center justify-between gap-6">
+      <header className="sticky top-0 z-40 border-b border-line bg-white dark:bg-canvas">
+        <div className="wrap flex h-20 items-center justify-between gap-6">
           <Link href="/" className="flex shrink-0 items-center" aria-label={`${siteName}, home`}>
-            <Image src="/brand/the-gathering-logo.png" alt={siteName} width={635} height={320} priority className="h-11 w-auto invert dark:invert-0" />
+            <Image src="/brand/the-gathering-logo.png" alt={siteName} width={635} height={320} priority className="h-14 w-auto invert dark:invert-0" />
           </Link>
           <nav aria-label="Main" className="hidden lg:block">
             <NavLinks items={NAV} />

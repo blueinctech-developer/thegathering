@@ -87,6 +87,8 @@ export const media = pgTable("media", {
   height: integer("height"),
   alt: text("alt").notNull().default(""),
   inGallery: boolean("in_gallery").notNull().default(false),
+  /** Where this photo is used on the site (see MEDIA_SLOTS), or "" for none. */
+  slot: text("slot").notNull().default(""),
   sortOrder: integer("sort_order").notNull().default(0),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
@@ -178,6 +180,7 @@ export const fundingStreams = pgTable("funding_streams", {
   amountGbp: integer("amount_gbp").notNull().default(0),
   amountUsd: integer("amount_usd").notNull().default(0),
   documentId: integer("document_id").references(() => media.id, { onDelete: "set null" }),
+  color: text("color").notNull().default("#7c1d1a"),
   sortOrder: integer("sort_order").notNull().default(0),
   published: boolean("published").notNull().default(true),
 });

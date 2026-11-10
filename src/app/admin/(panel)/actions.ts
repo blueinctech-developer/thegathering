@@ -314,6 +314,7 @@ export async function saveStream(_prev: ActionResult, data: FormData): Promise<A
     amountNgn: Math.max(0, fd.int(data, "amountNgn")),
     amountGbp: Math.max(0, fd.int(data, "amountGbp")),
     amountUsd: Math.max(0, fd.int(data, "amountUsd")),
+    color: /^#[0-9a-f]{6}$/i.test(fd.str(data, "color")) ? fd.str(data, "color") : "#7c1d1a",
     published: id ? fd.bool(data, "published") : true,
     ...(documentId !== undefined ? { documentId } : {}),
   };
@@ -365,7 +366,12 @@ export async function updateMedia(_prev: ActionResult, data: FormData): Promise<
   await requireAdmin();
   const id = fd.optId(data, "id");
   if (!id) return fail("Missing file.");
-  await db.update(media).set({ alt: fd.str(data, "alt", 300), inGallery: fd.bool(data, "inGallery") }).where(eq(media.id, id));
+  const slot = fd.str(data, "slot", 40);
+  if (slot) await db.update(media).set({ slot: "" }).where(eq(media.slot, slot)); // one photo per place
+  await db
+    .update(media)
+    .set({ alt: fd.str(data, "alt", 300), inGallery: fd.bool(data, "inGallery"), slot })
+    .where(eq(media.id, id));
   published();
   return ok("Saved.");
 }

@@ -1,5 +1,5 @@
 import "server-only";
-import { and, asc, eq, inArray } from "drizzle-orm";
+import { and, asc, eq, inArray, ne } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { db } from "@/lib/db";
 import {
@@ -110,6 +110,15 @@ export async function getFundingStreams() {
     .orderBy(asc(fundingStreams.sortOrder), asc(fundingStreams.id));
   const m = await mediaByIds(rows.map((r) => r.documentId));
   return rows.map((r) => ({ ...r, document: r.documentId ? (m.get(r.documentId) ?? null) : null }));
+}
+
+/** Photos assigned to a named place on the site (Admin > Photos and files > "Used on the site for"). */
+export async function getSlotImages(): Promise<Partial<Record<string, MediaRef>>> {
+  "use cache";
+  cacheLife("max");
+  cacheTag(CONTENT_TAG);
+  const rows = await db.select({ ...mediaCols, slot: media.slot }).from(media).where(ne(media.slot, ""));
+  return Object.fromEntries(rows.map(({ slot, ...m }) => [slot, m]));
 }
 
 export async function getGallery() {

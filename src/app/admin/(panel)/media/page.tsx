@@ -8,6 +8,7 @@ import { RowActions } from "@/components/admin/row-actions";
 import { requireAdmin } from "@/lib/admin/session";
 import { db } from "@/lib/db";
 import { media } from "@/lib/db/schema";
+import { MEDIA_SLOTS } from "@/lib/media";
 import { deleteMediaAction, moveMedia, updateMedia, uploadMedia } from "../actions";
 
 export default function MediaPage() {
@@ -52,9 +53,20 @@ async function MediaLibrary() {
             <input name="alt" defaultValue={f.alt} placeholder="What the photo shows" className="input min-h-10 py-2 text-sm" />
           </label>
           {f.contentType.startsWith("image/") && (
-            <div className="mt-3">
-              <Check label="Show in the gallery" name="inGallery" defaultChecked={f.inGallery} />
-            </div>
+            <>
+              <label className="mt-3 block">
+                <span className="field-label text-sm">Used on the site for</span>
+                <select name="slot" defaultValue={f.slot} className="input min-h-10 py-2 text-sm">
+                  <option value="">Nothing in particular</option>
+                  {MEDIA_SLOTS.map((s) => (
+                    <option key={s.key} value={s.key}>{s.label}</option>
+                  ))}
+                </select>
+              </label>
+              <div className="mt-3">
+                <Check label="Show in the gallery" name="inGallery" defaultChecked={f.inGallery} />
+              </div>
+            </>
           )}
         </AdminForm>
       </div>

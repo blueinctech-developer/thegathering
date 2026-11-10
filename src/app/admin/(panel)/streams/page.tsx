@@ -17,12 +17,16 @@ export default function StreamsPage() {
   );
 }
 
-function AmountFields({ ngn, gbp, usd }: { ngn?: number; gbp?: number; usd?: number }) {
+function AmountFields({ ngn, gbp, usd, color }: { ngn?: number; gbp?: number; usd?: number; color?: string }) {
   return (
-    <div className="grid gap-3 sm:grid-cols-3">
+    <div className="grid gap-3 sm:grid-cols-4">
       <Field label="Naira (NGN)" name="amountNgn" type="number" min={0} defaultValue={ngn} />
       <Field label="Pounds (GBP)" name="amountGbp" type="number" min={0} defaultValue={gbp} />
       <Field label="Dollars (USD)" name="amountUsd" type="number" min={0} defaultValue={usd} />
+      <label className="block">
+        <span className="field-label">Card colour</span>
+        <input type="color" name="color" defaultValue={color ?? "#7c1d1a"} className="input h-12 cursor-pointer p-1" />
+      </label>
     </div>
   );
 }
@@ -50,6 +54,7 @@ async function StreamsEditor() {
             <li key={s.id} className="card">
               <details className="group">
                 <summary className="flex cursor-pointer list-none flex-wrap items-baseline gap-x-4 gap-y-1 p-4">
+                  <span aria-hidden className="size-3 rounded-full" style={{ background: s.color }} />
                   <span className="font-display text-sm font-semibold text-accent-text">{String(i + 1).padStart(2, "0")}</span>
                   <span className="flex-1 font-semibold">{s.title}{!s.published && <span className="text-sm font-normal text-muted"> · Hidden</span>}</span>
                   <span className="tabular-nums text-ink-2">{money.ngn(s.amountNgn)}</span>
@@ -63,7 +68,7 @@ async function StreamsEditor() {
                         <Field label="Title" name="title" defaultValue={s.title} required />
                         <Field label="One-line summary" name="summary" defaultValue={s.summary} />
                       </div>
-                      <AmountFields ngn={s.amountNgn} gbp={s.amountGbp} usd={s.amountUsd} />
+                      <AmountFields ngn={s.amountNgn} gbp={s.amountGbp} usd={s.amountUsd} color={s.color} />
                       <label className="block text-sm">
                         <span className="field-label">One-page summary (PDF)</span>
                         {doc && (

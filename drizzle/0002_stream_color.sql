@@ -1,0 +1,1 @@
+ALTER TABLE "funding_streams" ADD COLUMN "color" text DEFAULT '#7c1d1a' NOT NULL;

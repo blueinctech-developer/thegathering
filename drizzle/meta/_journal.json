@@ -15,6 +15,20 @@
       "when": 1794302916057,
       "tag": "0001_partner_hero",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794306982999,
+      "tag": "0002_stream_color",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794309870206,
+      "tag": "0003_media_slot",
+      "breakpoints": true
     }
   ]
 }

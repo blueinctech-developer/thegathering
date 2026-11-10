@@ -7,3 +7,9 @@ export const FAQS = [
   { title: "Is there medical care at the conference?", body: "Yes. Volunteer medical professionals offer free blood pressure, diabetes and eye screening, consultations and essential medication." },
   { title: "How can I support the work?", body: "Pray with us, give toward a funding stream, or sponsor a project on The Gathering Land. Send a partnership enquiry and the team will contact you personally." },
 ];
+
+/** Free Unsplash stock photos (see assets_originals/stock/CREDITS.md) for places the ministry has no photo of yet. */
+export const STOCK = [
+  { file: "medical-outreach-nappy-unsplash.jpg", slot: "medical", alt: "A health worker checking an older man's blood pressure" },
+  { file: "heart-of-compassion-michael-ali-unsplash.jpg", slot: "compassion", alt: "A plate of food being handed to a young child" },
+];

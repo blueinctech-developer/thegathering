@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DownloadSimple, EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
+import { DownloadSimple, EnvelopeSimple, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
 import { ListIcon } from "@/components/icon";
 import { EnquiryForm } from "@/components/site/enquiry-form";
 import { Reveal } from "@/components/site/reveal";
@@ -10,7 +10,7 @@ import { submitPartnership } from "../enquiry-actions";
 
 export const metadata: Metadata = {
   title: "Partner with us",
-  description: "Partner with The Gathering through prayer, giving or sponsoring a project. See the 2026 funding streams and send a partnership enquiry.",
+  description: "Partner with The Gathering through prayer, giving or sponsoring a project. See the 2026 partnership streams and send a partnership enquiry.",
 };
 
 export default async function PartnerPage() {
@@ -26,135 +26,167 @@ export default async function PartnerPage() {
     (t, s) => ({ ngn: t.ngn + s.amountNgn, gbp: t.gbp + s.amountGbp, usd: t.usd + s.amountUsd }),
     { ngn: 0, gbp: 0, usd: 0 },
   );
+  const docsUrl = /^https?:\/\//.test(site.partnerDocsUrl) ? site.partnerDocsUrl : "";
+  const overviewHref = ev?.overviewPdf ? `/media/${ev.overviewPdf.key}` : docsUrl;
 
   return (
     <>
       <PageHero label="Partner with us" title={site.partnerHeading} intro={site.partnerIntro} photo={ev?.partnerHero ?? gallery[8] ?? gallery[0]}>
-        <a href="#enquire" className="pill pill-ember pill-lg">Send an enquiry</a>
-        <a href="#streams" className="pill pill-light pill-lg">Funding streams</a>
+        <a href="#enquire" className="pill pill-gold pill-lg">Send an enquiry</a>
+        <a href="#streams" className="pill pill-light pill-lg">Partnership streams</a>
       </PageHero>
 
+      {/* What partnership makes possible */}
       {reasons.length > 0 && (
         <section aria-label="What partnership makes possible" className="wrap pb-24">
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {reasons.map((r, i) => (
-              <li key={r.id} className="panel-stripes rounded-[1.5rem] p-6">
-                <span className="grid size-8 place-items-center rounded-full bg-card text-sm tabular-nums">{i + 1}</span>
-                <p className="mt-8 text-lg leading-snug tracking-tight">{r.title}</p>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {reasons.map((r) => (
+              <li key={r.id} className="card flex items-start gap-4 p-6 ring-1 ring-line">
+                <span aria-hidden className="mt-2 size-2.5 shrink-0 rounded-full bg-gold" />
+                <span className="text-lg leading-snug">{r.title}</span>
               </li>
             ))}
           </ul>
         </section>
       )}
 
+      {/* Partnership tiers, plus the stewardship promise */}
       {tiers.length > 0 && (
         <section aria-labelledby="tiers-h" className="bg-band py-24 md:py-32">
           <div className="wrap">
-            <SectionHead id="tiers-h" title="Ways to partner" />
-            <ul className="mt-16 grid gap-4 md:grid-cols-6">
+            <SectionHead id="tiers-h" title="Partnership tiers" />
+            <ul className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {tiers.map((t, i) => (
-                <Reveal as="li" key={t.id} delay={(i % 3) * 0.06} className={`card flex flex-col p-8 ${i < 2 ? "md:col-span-3" : "md:col-span-2"}`}>
-                  <span className="grid size-12 place-items-center rounded-full bg-ember-tint text-ember-deep">
+                <Reveal as="li" key={t.id} delay={(i % 3) * 0.06} className="card flex flex-col p-8">
+                  <span className="grid size-12 place-items-center rounded-xl bg-ember-tint text-ember-deep">
                     <ListIcon name={t.icon} size={24} />
                   </span>
-                  <h3 className="mt-8 text-2xl">{t.title}</h3>
+                  <h3 className="mt-7 text-2xl">{t.title}</h3>
                   <p className="mt-2 text-ink-2">{t.body}</p>
                 </Reveal>
               ))}
+              <li className="flex flex-col items-center justify-center gap-4 rounded-[1.75rem] border border-dashed border-ember-light bg-ember-tint p-8 text-center">
+                <ShieldCheck size={32} weight="light" className="text-ember-deep" aria-hidden />
+                <p className="font-medium">All giving is stewarded with integrity and accountability.</p>
+                {site.contactEmail && (
+                  <a href={`mailto:${site.contactEmail}`} className="inline-flex items-center gap-2 font-medium text-ember-deep hover:underline">
+                    <EnvelopeSimple size={18} aria-hidden /> Enquire by email
+                  </a>
+                )}
+              </li>
             </ul>
           </div>
         </section>
       )}
 
+      {/* Strategic partnership streams */}
       {streams.length > 0 && (
         <section id="streams" aria-labelledby="streams-h" className="wrap py-24 md:py-32">
           <SectionHead
             id="streams-h"
-            title={`Partnership streams${ev ? ` for ${ev.name}` : ""}`}
-            intro="Each stream is a specific area of work you can sponsor in full or in part."
+            title={`Strategic partnership streams${ev ? ` for ${ev.name}` : ""}`}
+            intro="Each stream represents a key area of impact. Download the detailed one-pager for any stream below."
           />
           <ol className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {streams.map((s, i) => (
-              <Reveal as="li" key={s.id} delay={(i % 4) * 0.05} className="card-line flex flex-col p-6">
-                <span className="t-label">Stream {i + 1}</span>
-                <h3 className="mt-3 text-xl">{s.title}</h3>
-                {s.summary && <p className="mt-2 text-sm text-ink-2">{s.summary}</p>}
-                <div className="mt-auto pt-8">
-                  <p className="text-[1.9rem] leading-none tracking-[-0.03em] tabular-nums">{money.ngn(s.amountNgn)}</p>
-                  <p className="mt-2 text-sm tabular-nums text-ink-3">
-                    {money.gbp(s.amountGbp)} or {money.usd(s.amountUsd)}
-                  </p>
-                  {s.document && (
-                    <a href={`/media/${s.document.key}`} className="link mt-4 inline-flex items-center gap-1.5 text-sm" download>
-                      <DownloadSimple size={16} aria-hidden /> One-page summary
-                    </a>
-                  )}
-                </div>
-              </Reveal>
-            ))}
+            {streams.map((s, i) => {
+              const href = s.document ? `/media/${s.document.key}` : docsUrl;
+              return (
+                <Reveal as="li" key={s.id} delay={(i % 4) * 0.05} className="card flex flex-col overflow-hidden ring-1 ring-line">
+                  <h3 className="flex min-h-[6.75rem] items-start px-6 py-5 text-xl leading-snug text-white" style={{ background: s.color }}>
+                    {i + 1}. {s.title}
+                  </h3>
+                  <div className="flex flex-1 flex-col p-5">
+                    <dl className="grid grid-cols-3 gap-2 text-center">
+                      {[
+                        ["NGN", money.ngn(s.amountNgn)],
+                        ["GBP", money.gbp(s.amountGbp)],
+                        ["USD", money.usd(s.amountUsd)],
+                      ].map(([k, v]) => (
+                        <div key={k} className="flex flex-col-reverse">
+                          <dt className="text-xs tracking-wide text-ink-3">{k}</dt>
+                          <dd className="text-sm font-semibold tabular-nums">{v}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                    {s.summary && <p className="mt-4 text-sm text-ink-2">{s.summary}</p>}
+                    {href && (
+                      <a
+                        href={href}
+                        {...(s.document ? { download: true } : { target: "_blank", rel: "noopener noreferrer" })}
+                        className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-band px-4 py-2.5 text-sm font-medium transition-colors hover:bg-ember-tint"
+                      >
+                        <DownloadSimple size={16} aria-hidden /> Download one-pager
+                      </a>
+                    )}
+                  </div>
+                </Reveal>
+              );
+            })}
           </ol>
 
-          <div className="mt-6 rounded-[2rem] bg-ground p-8 text-white sm:p-12">
-            <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-              <div>
-                <h3 className="text-2xl">Total funding requirement</h3>
-                <dl className="mt-8 grid gap-8 sm:grid-cols-3">
-                  {[
-                    ["Nigerian naira", money.ngn(total.ngn)],
-                    ["British pounds", money.gbp(total.gbp)],
-                    ["US dollars", money.usd(total.usd)],
-                  ].map(([k, v], i) => (
-                    <div key={k}>
-                      <dt className="text-sm text-white/60">{k}</dt>
-                      <dd className={`mt-2 text-[clamp(1.9rem,3.4vw,2.75rem)] leading-none tracking-[-0.03em] tabular-nums ${i === 0 ? "text-gold" : ""}`}>{v}</dd>
-                    </div>
-                  ))}
-                </dl>
-                {site.fundingNote && <p className="mt-8 text-sm text-white/55">{site.fundingNote}</p>}
-              </div>
-              {ev?.overviewPdf && (
-                <a href={`/media/${ev.overviewPdf.key}`} download className="pill pill-gold pill-lg self-start">
-                  <DownloadSimple size={18} aria-hidden /> Partnership overview
-                </a>
-              )}
+          {/* Total funding requirement */}
+          <div className="card mt-6 grid gap-8 p-8 ring-1 ring-line sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <h3 className="text-3xl">Total funding requirement</h3>
+              <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-5">
+                {[
+                  ["Nigerian naira", site.fundingTotalNgn || money.ngn(total.ngn)],
+                  ["British pounds", site.fundingTotalGbp || money.gbp(total.gbp)],
+                  ["US dollars", site.fundingTotalUsd || money.usd(total.usd)],
+                ].map(([k, v]) => (
+                  <div key={k} className="flex flex-col-reverse">
+                    <dt className="mt-1 text-xs uppercase tracking-[0.08em] text-ink-3">{k}</dt>
+                    <dd className="font-display text-[clamp(1.9rem,3.4vw,2.6rem)] font-extrabold leading-none tracking-[-0.03em] tabular-nums text-ember-deep">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+              {site.fundingNote && <p className="mt-5 text-sm text-ink-3">{site.fundingNote}</p>}
+              <p className="mt-3 text-ink-2">Download the full outreach and partnership summary for {ev?.name ?? site.siteName}.</p>
             </div>
+            {overviewHref && (
+              <a
+                href={overviewHref}
+                {...(ev?.overviewPdf ? { download: true } : { target: "_blank", rel: "noopener noreferrer" })}
+                className="pill pill-ember pill-lg self-start lg:self-center"
+              >
+                <DownloadSimple size={18} aria-hidden /> Full partnership overview
+              </a>
+            )}
+          </div>
+
+          {/* A note on giving */}
+          <div className="mt-4 rounded-[1.5rem] border border-gold/40 bg-gold/10 p-6">
+            <p className="font-semibold">A note on giving</p>
+            <p className="mt-1 text-ink-2">{site.givingNote}</p>
           </div>
         </section>
       )}
 
+      {/* Partnership enquiry */}
       <section id="enquire" aria-labelledby="enquire-h" className="bg-band py-24 md:py-32">
         <div className="wrap">
-          <SectionHead id="enquire-h" title="Partnership enquiry" intro="Tell us how you would like to partner and a member of the team will contact you personally." />
-          <div className="mx-auto mt-14 grid max-w-5xl gap-5 lg:grid-cols-[1fr_1.6fr]">
-            <aside className="panel-stripes flex flex-col gap-6 rounded-[1.75rem] p-8">
-              <p className="text-lg leading-snug tracking-tight">{site.givingNote}</p>
-              {site.contactEmail && (
-                <a href={`mailto:${site.contactEmail}`} className="mt-auto inline-flex items-center gap-2 font-medium">
-                  <EnvelopeSimple size={20} className="text-ember-deep" aria-hidden /> {site.contactEmail}
-                </a>
-              )}
-            </aside>
-            <div className="card p-6 sm:p-10">
-              <EnquiryForm
-                action={submitPartnership}
-                submitLabel="Send enquiry"
-                fields={[
-                  { name: "name", label: "Full name", required: true, autoComplete: "name" },
-                  { name: "email", label: "Email", type: "email", required: true, autoComplete: "email" },
-                  { name: "organisation", label: "Organisation or church", autoComplete: "organization" },
-                  { name: "country", label: "Country", required: true, autoComplete: "country-name" },
-                  { name: "phone", label: "Phone", type: "tel", autoComplete: "tel" },
-                  {
-                    name: "interest",
-                    label: "How would you like to partner?",
-                    type: "select",
-                    required: true,
-                    options: [...tiers.map((t) => t.title), ...streams.map((s) => `Sponsor: ${s.title}`), "Something else"],
-                  },
-                  { name: "message", label: "Message", type: "textarea", required: true },
-                ]}
-              />
-            </div>
+          <SectionHead id="enquire-h" title="Partnership enquiry" intro="Tell us a little about how you'd like to partner. Our team will be in touch." />
+          <div className="card mx-auto mt-14 max-w-3xl p-6 ring-1 ring-line sm:p-10">
+            <EnquiryForm
+              action={submitPartnership}
+              submitLabel="Submit enquiry"
+              fields={[
+                { name: "name", label: "Full name", required: true, autoComplete: "name" },
+                { name: "organisation", label: "Organisation or church name", autoComplete: "organization" },
+                { name: "email", label: "Email", type: "email", required: true, autoComplete: "email" },
+                { name: "country", label: "Country", required: true, autoComplete: "country-name" },
+                {
+                  name: "interest",
+                  label: "Partnership interest",
+                  type: "select",
+                  required: true,
+                  wide: true,
+                  options: [...tiers.map((t) => t.title), ...streams.map((s) => `Sponsor: ${s.title}`), "Something else"],
+                },
+                { name: "message", label: "Message", type: "textarea", required: true },
+              ]}
+            />
+            <p className="mt-4 text-sm text-ink-3">By submitting, you agree to be contacted by The Gathering team. No bank or payment details are requested on this form.</p>
           </div>
         </div>
       </section>

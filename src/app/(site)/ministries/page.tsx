@@ -3,7 +3,7 @@ import { HandHeart, Stethoscope, UsersThree } from "@phosphor-icons/react/dist/s
 import { MediaImage } from "@/components/media-image";
 import { Reveal } from "@/components/site/reveal";
 import { ArrowLink, PageHero, SectionHead } from "@/components/site/ui";
-import { getGallery, getList, getSite } from "@/lib/content/queries";
+import { getGallery, getList, getSite, getSlotImages } from "@/lib/content/queries";
 
 export const metadata: Metadata = {
   title: "Ministries and outreach",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function MinistriesPage() {
-  const [site, medical, gallery] = await Promise.all([getSite(), getList("medical"), getGallery()]);
+  const [site, medical, gallery, slots] = await Promise.all([getSite(), getList("medical"), getGallery(), getSlotImages()]);
   const photo = (i: number) => gallery[i] ?? gallery[0] ?? null;
 
   return (
@@ -39,9 +39,9 @@ export default async function MinistriesPage() {
               </p>
             </div>
             <div className="panel-stripes rounded-[1.5rem] p-4 sm:p-5">
-              {photo(13) && (
+              {slots.medical && (
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[1.1rem] ring-4 ring-card">
-                  <MediaImage media={photo(13)!} fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
+                  <MediaImage media={slots.medical} fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
                 </div>
               )}
               {medical.length > 0 && (
@@ -61,9 +61,9 @@ export default async function MinistriesPage() {
               </span>
               <h2 className="mt-8 text-[1.9rem] tracking-tight">Heart of Compassion</h2>
               <p className="mt-3 text-ink-2">{site.compassionBody}</p>
-              {photo(14) && (
+              {slots.compassion && (
                 <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-[1.25rem] bg-band">
-                  <MediaImage media={photo(14)!} fill sizes="(min-width: 768px) 45vw, 100vw" className="object-cover" />
+                  <MediaImage media={slots.compassion} fill sizes="(min-width: 768px) 45vw, 100vw" className="object-cover" />
                 </div>
               )}
             </Reveal>
