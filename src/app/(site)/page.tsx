@@ -41,6 +41,7 @@ export default async function HomePage() {
     getList("highlights"),
   ]);
   const photo = (i: number) => gallery[i] ?? gallery[0] ?? null;
+  const heroFlyer = ev?.flyer ?? ev?.hero ?? null;
   const totalNgn = streams.reduce((t, s) => t + s.amountNgn, 0);
 
   const experiences = [
@@ -53,36 +54,52 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero: cinematic inset photo panel */}
+      {/* Hero: headline beside the official programme flyer, shown whole (its own text stays readable) */}
       <section className="overflow-hidden">
         <div className="wrap pt-4 sm:pt-6">
-          <div className="relative isolate overflow-hidden rounded-[2rem] bg-ground text-white">
-            {ev?.hero && (
-              <MediaImage media={ev.hero} fill priority sizes="100vw" className="-z-20 object-cover object-[50%_30%] grayscale-[45%]" alt="" />
-            )}
-            <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(0_0_0/0.82)_0%,rgb(0_0_0/0.55)_50%,rgb(0_0_0/0.2)_100%),linear-gradient(180deg,transparent_55%,rgb(0_0_0/0.75)_100%)]" />
-            <div className="flex min-h-[calc(100dvh-9rem)] flex-col justify-between gap-12 p-6 sm:p-10 lg:p-14">
-              {ev && <p className="t-label !text-gold">{ev.name}</p>}
+          <div className="relative isolate overflow-hidden rounded-[2rem] bg-[#17110f] text-white">
+            <span
+              aria-hidden
+              className="absolute inset-0 -z-10 bg-[radial-gradient(70%_80%_at_85%_20%,rgb(124_29_26/0.55),transparent_70%),radial-gradient(50%_60%_at_0%_100%,rgb(213_161_60/0.14),transparent_70%)]"
+            />
+            <div className="grid gap-10 p-6 sm:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12 lg:p-14">
               <div>
-                <h1 className="t-hero max-w-[10ch]">
+                {ev && <p className="t-label !text-gold">{ev.name}</p>}
+                <h1 className="mt-6 max-w-[10ch] text-[clamp(2.9rem,6vw,5.75rem)] leading-[0.92]">
                   {ev ? <Accent text={ev.theme} period /> : site.siteName}
                 </h1>
-                <p className="mt-7 max-w-[44ch] text-lg text-white/80 sm:text-xl">{site.heroSummary}</p>
-                <div className="mt-9 flex flex-wrap gap-3">
-                  <Link href="/gathering-2026" className="pill pill-ember pill-lg">Plan your visit</Link>
+                <p className="mt-6 max-w-[44ch] text-lg text-white/80">{site.heroSummary}</p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Link href="/gathering-2026" className="pill pill-gold pill-lg">Plan your visit</Link>
                   <Link href="/partner" className="pill pill-light pill-lg">Partner with us</Link>
                 </div>
               </div>
-              {ev && (
-                <div className="flex flex-col gap-5 border-t border-white/15 pt-6 sm:flex-row sm:items-end sm:justify-between">
-                  <p className="text-sm text-white/75">
-                    <span className="block text-base font-medium text-white">{formatDateRange(ev.startsAt, ev.endsAt)}</span>
-                    {ev.locationLabel}. Free entry.
-                  </p>
-                  <Countdown startsAt={ev.startsAt.toISOString()} endsAt={ev.endsAt.toISOString()} tone="dark" />
-                </div>
+              {heroFlyer && (
+                <a
+                  href={`/media/${heroFlyer.key}`}
+                  target="_blank"
+                  rel="noopener"
+                  className="group relative block overflow-hidden rounded-[1.5rem] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8)] ring-1 ring-white/15"
+                >
+                  <MediaImage
+                    media={heroFlyer}
+                    priority
+                    sizes="(min-width: 1024px) 55vw, 100vw"
+                    className="h-auto w-full transition-transform duration-700 group-hover:scale-[1.015]"
+                  />
+                  <span className="sr-only">Open the full programme flyer</span>
+                </a>
               )}
             </div>
+            {ev && (
+              <div className="flex flex-col gap-5 border-t border-white/10 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-14">
+                <p className="text-sm text-white/70">
+                  <span className="block text-base font-medium text-white">{formatDateRange(ev.startsAt, ev.endsAt)}</span>
+                  {ev.locationLabel}. Free entry.
+                </p>
+                <Countdown startsAt={ev.startsAt.toISOString()} endsAt={ev.endsAt.toISOString()} tone="dark" />
+              </div>
+            )}
           </div>
         </div>
 
@@ -195,11 +212,6 @@ export default async function HomePage() {
         <section aria-labelledby="speakers-h" className="pb-24 md:pb-32">
           <div className="wrap">
             <SectionHead id="speakers-h" title={`Ministering at ${ev?.name ?? site.siteName}`} intro={ev ? `Servants of God ministering under the theme ${ev.theme}.` : undefined} />
-            {ev?.flyer && (
-              <Reveal className="mt-14 overflow-hidden rounded-[1.75rem] bg-band p-2 sm:p-3">
-                <MediaImage media={ev.flyer} sizes="(min-width: 1280px) 1240px, 100vw" className="h-auto w-full rounded-[1.35rem]" />
-              </Reveal>
-            )}
           </div>
           <ul className="wrap mt-10 flex flex-wrap justify-center gap-2" aria-label="Speakers">
             {speakers.map((s) => (
