@@ -11,7 +11,9 @@ import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client } fro
  * S3_FORCE_PATH_STYLE ("true" for most non-AWS providers). AWS_* equivalents are used as fallbacks.
  */
 const env = process.env;
-const bucket = env.S3_BUCKET ?? "";
+// The bucket name defaults to "thegathering" when bucket keys are set but S3_BUCKET is not.
+const bucket =
+  env.S3_BUCKET || env.AWS_S3_BUCKET || ((env.S3_ENDPOINT || env.AWS_ENDPOINT_URL_S3) && (env.S3_ACCESS_KEY_ID || env.AWS_ACCESS_KEY_ID) ? "thegathering" : "");
 const localRoot = path.join(process.cwd(), ".data", "storage");
 
 let client: S3Client | null = null;
