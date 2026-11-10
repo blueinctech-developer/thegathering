@@ -6,7 +6,9 @@ import { db } from "@/lib/db";
 import { authSchema } from "@/lib/db/schema";
 
 const baseURL = process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_SITE_URL || undefined;
-const vercelUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined;
+const vercelHosts = [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL, process.env.VERCEL_PROJECT_PRODUCTION_URL]
+  .filter(Boolean)
+  .map((h) => `https://${h}`);
 
 /**
  * Admin login. Email and password only; public sign-up is off, so accounts are created
@@ -15,7 +17,7 @@ const vercelUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` :
 export const auth = betterAuth({
   baseURL,
   secret: process.env.BETTER_AUTH_SECRET,
-  trustedOrigins: [baseURL, vercelUrl].filter((v): v is string => Boolean(v)),
+  trustedOrigins: [baseURL, ...vercelHosts].filter((v): v is string => Boolean(v)),
   database: drizzleAdapter(db, { provider: "pg", schema: authSchema }),
   emailAndPassword: {
     enabled: true,

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Geist } from "next/font/google";
 import "./globals.css";
+import { siteUrl } from "@/lib/site-url";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -15,10 +16,9 @@ const archivo = Archivo({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.BETTER_AUTH_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteUrl()),
   title: {
     default: "The Gathering",
     template: "%s | The Gathering",

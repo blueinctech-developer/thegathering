@@ -8,6 +8,7 @@ import { Reveal } from "@/components/site/reveal";
 import { PageHero, SectionHead } from "@/components/site/ui";
 import { getEvent, getGallery, getList, getProgramme, getSite, getSpeakers } from "@/lib/content/queries";
 import { formatDateRange, formatDay } from "@/lib/format";
+import { siteUrl } from "@/lib/site-url";
 
 export async function generateMetadata(): Promise<Metadata> {
   const ev = await getEvent();
@@ -49,7 +50,7 @@ export default async function GatheringPage() {
     isAccessibleForFree: true,
     description: ev.summary,
     location: { "@type": "Place", name: ev.venueName || ev.locationLabel, address: ev.venueAddress || ev.locationLabel },
-    organizer: { "@type": "Organization", name: site.orgName, url: process.env.NEXT_PUBLIC_SITE_URL },
+    organizer: { "@type": "Organization", name: site.orgName, url: siteUrl() },
     performer: speakers.map((s) => ({ "@type": "Person", name: s.name })),
   };
 

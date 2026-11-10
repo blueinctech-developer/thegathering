@@ -11,7 +11,7 @@
     "db:migrate": "tsx scripts/migrate.ts",
     "db:seed": "tsx scripts/seed.ts",
     "admin:create": "tsx scripts/create-admin.ts",
-    "vercel-build": "tsx scripts/migrate.ts && next build",
+    "vercel-build": "tsx scripts/migrate.ts && tsx scripts/seed.ts && tsx scripts/bootstrap-admin.ts && next build",
     "db:local": "pglite-server --db=.data/pglite --port=5433 --max-connections=10"
   },
   "dependencies": {
