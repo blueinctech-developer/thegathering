@@ -192,11 +192,9 @@
   .card { background: var(--card); border-radius: 1.75rem; }
   .card-line { background: var(--card); border: 1px solid var(--line); border-radius: 1.5rem; }
 
-  /* Signature panel: ember wash with fine diagonal stripes */
+    /* Signature panel: a solid wash of the brand tint (no pattern) */
   .panel-stripes {
     background-color: var(--ember-tint);
-    background-image: repeating-linear-gradient(135deg, var(--stripe) 0 1px, transparent 1px 11px),
-      radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--ember) 22%, transparent), transparent 60%);
   }
   .panel-glow {
     background-image: radial-gradient(80% 60% at 50% 0%, color-mix(in srgb, var(--ember) 18%, transparent), transparent 70%);
