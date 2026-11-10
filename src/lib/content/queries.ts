@@ -53,13 +53,14 @@ export async function getEvent() {
   cacheTag(CONTENT_TAG);
   const [ev] = await db.select().from(events).where(eq(events.isCurrent, true)).orderBy(asc(events.id)).limit(1);
   if (!ev) return null;
-  const m = await mediaByIds([ev.heroImageId, ev.flyerImageId, ev.busFlyerImageId, ev.overviewPdfId]);
+  const m = await mediaByIds([ev.heroImageId, ev.flyerImageId, ev.busFlyerImageId, ev.overviewPdfId, ev.partnerHeroImageId]);
   return {
     ...ev,
     hero: ev.heroImageId ? (m.get(ev.heroImageId) ?? null) : null,
     flyer: ev.flyerImageId ? (m.get(ev.flyerImageId) ?? null) : null,
     busFlyer: ev.busFlyerImageId ? (m.get(ev.busFlyerImageId) ?? null) : null,
     overviewPdf: ev.overviewPdfId ? (m.get(ev.overviewPdfId) ?? null) : null,
+    partnerHero: ev.partnerHeroImageId ? (m.get(ev.partnerHeroImageId) ?? null) : null,
   };
 }
 export type CurrentEvent = NonNullable<Awaited<ReturnType<typeof getEvent>>>;

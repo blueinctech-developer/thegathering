@@ -64,6 +64,7 @@ async function EventEditor() {
               <MediaSelect label="Hero photo" name="heroImageId" current={byId(ev?.heroImageId)} options={images} help="Large photo at the top of the home page. Landscape works best." />
               <MediaSelect label="Speakers lineup flyer" name="flyerImageId" current={byId(ev?.flyerImageId)} options={images} />
               <MediaSelect label="Bus flyer" name="busFlyerImageId" current={byId(ev?.busFlyerImageId)} options={images} />
+              <MediaSelect label="Partner page photo" name="partnerHeroImageId" current={byId(ev?.partnerHeroImageId)} options={images} help="Large photo at the top of the Partner With Us page." />
               <MediaSelect
                 label="Partnership overview (PDF)"
                 name="overviewPdfId"

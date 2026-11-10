@@ -120,7 +120,7 @@ export default async function GatheringPage() {
             <SectionHead
               id="speakers-h"
               title="Ministers and speakers"
-              intro={ev ? `Ministering under the theme ${ev.theme}${ev.subtitle ? `, ${ev.subtitle}` : ""}.` : undefined}
+              intro={ev ? `Anointed servants of God ministering under the theme ${ev.theme} at ${ev.name}.` : undefined}
             />
             {ev?.flyer && (
               <div className="card mt-14 p-2 sm:p-3">

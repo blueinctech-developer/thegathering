@@ -27,7 +27,7 @@ export function SiteHeader({ siteName, announcement }: { siteName: string; annou
             <NavLinks items={NAV} />
           </nav>
           <div className="flex items-center gap-2">
-            <Link href={PARTNER_CTA.href} className="pill pill-ink hidden sm:inline-flex">
+            <Link href={PARTNER_CTA.href} className="pill pill-ember hidden sm:inline-flex">
               {PARTNER_CTA.label}
             </Link>
             <MobileMenu items={NAV} cta={PARTNER_CTA} />

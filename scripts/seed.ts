@@ -64,31 +64,39 @@ const LIST_SEED: Record<ListKey, { title: string; body?: string; icon?: string }
     { title: "Impact", body: "Compassion that transforms communities.", icon: "heart" },
     { title: "Empower", body: "Equipping lives for lasting change.", icon: "users" },
   ],
+  highlights: [
+    { title: "Three-day conference", body: "27 to 29 November 2026, Ido LGA, Oyo State, Nigeria.", icon: "flame" },
+    { title: "Up to 5,000 people served", body: "Through medical and compassion outreach.", icon: "users" },
+    { title: "Medical outreach", body: "Blood pressure, diabetes and eye screening, essential medication.", icon: "stethoscope" },
+    { title: "Heart of Compassion", body: "Community feeding for vulnerable families.", icon: "bowl" },
+    { title: "The Gathering Land", body: "Permanent land development in Ido LGA, Oyo State.", icon: "map" },
+    { title: "Interdenominational", body: "Uniting ministers, families, and communities in prayer.", icon: "hands" },
+  ],
   impact: [
     { title: "5,000+", body: "Lives touched each year" },
     { title: "20,000+", body: "Individuals blessed" },
     { title: "13", body: "Medical centre partners" },
   ],
   expect: [
-    { title: "An atmosphere of intercession, revival, healing and restoration" },
+    { title: "Atmosphere of intercession, revival, healing, and restoration" },
     { title: "Ministry from invited speakers and ministers" },
     { title: "Worship, healing and revival gatherings" },
     { title: "Medical outreach reaching up to 5,000 people" },
-    { title: "Compassion feeding for vulnerable families" },
-    { title: "Community engagement and outreach" },
+    { title: "Compassion feeding support for vulnerable families" },
+    { title: "Community engagement and outreach initiatives" },
   ],
   medical: [
     { title: "Blood pressure screening" },
     { title: "Diabetes screening" },
     { title: "Basic medical consultation" },
     { title: "Eye care support" },
-    { title: "Essential medication" },
-    { title: "Health education and preventive care" },
+    { title: "Distribution of essential medications" },
+    { title: "Health education & preventive care" },
   ],
   landVision: [
     { title: "Host future Gathering conferences" },
     { title: "Provide space for outreach" },
-    { title: "Support medical and compassion work" },
+    { title: "Support medical and compassion initiatives" },
     { title: "Enable long-term ministry growth and training" },
   ],
   infrastructure: [
@@ -110,16 +118,16 @@ const LIST_SEED: Record<ListKey, { title: string; body?: string; icon?: string }
   ],
   partnerReasons: [
     { title: "Expand medical outreach to underserved communities" },
-    { title: "Support compassion work for vulnerable families" },
-    { title: "Build permanent infrastructure for future Gatherings" },
-    { title: "Strengthen revival through prayer and ministry" },
+    { title: "Support compassion initiatives for vulnerable families" },
+    { title: "Develop permanent infrastructure for future Gatherings" },
+    { title: "Strengthen spiritual revival through prayer and ministry" },
   ],
   partnerTiers: [
-    { title: "Prayer Partner", body: "Standing with The Gathering through prayer, intercession and spiritual support.", icon: "hands" },
-    { title: "Support Partner", body: "Giving toward outreach, infrastructure and conference operations.", icon: "heart" },
-    { title: "Covenant Partner", body: "A significant commitment toward the vision at a leadership giving level.", icon: "handshake" },
-    { title: "Territory Builder", body: "Individuals or organisations who sponsor a specific project on The Gathering Land.", icon: "map" },
-    { title: "Corporate or Ministry Sponsor", body: "Churches, organisations and businesses supporting a specific outreach or development stream.", icon: "buildings" },
+    { title: "Prayer Partner", body: "Standing with The Gathering through prayer, intercession, and spiritual support.", icon: "hands" },
+    { title: "Support Partner", body: "Contributing financially toward outreach, infrastructure, and conference operations.", icon: "heart" },
+    { title: "Covenant Partner", body: "Partners who make a significant commitment toward the vision at a leadership giving level.", icon: "handshake" },
+    { title: "Territory Builder", body: "Individuals or organisations who sponsor specific infrastructure or development projects connected to the Gathering Land.", icon: "map" },
+    { title: "Corporate / Ministry Sponsor", body: "Churches, organisations, and businesses who partner in supporting specific outreach or development streams.", icon: "buildings" },
   ],
   governance: [{ title: "Integrity" }, { title: "Accountability" }, { title: "Responsible stewardship" }],
   faqs: FAQS,
@@ -145,14 +153,14 @@ const PROGRAMME: { label: string; day: string; title: string; items: string[] }[
 ];
 
 const STREAMS: [string, string, number, number, number][] = [
-  ["Territory Foundation", "Completing payments and securing The Gathering Land.", 18_500_000, 11_563, 15_417],
-  ["Worship and Sound", "Permanent instruments and sound for worship and ministry.", 30_000_000, 18_750, 25_000],
-  ["Power and Light", "Solar installation and street lighting on site.", 25_000_000, 15_625, 20_833],
-  ["Safety and Security", "Perimeter fencing and on-site security.", 15_000_000, 9_375, 12_500],
-  ["Comfort and Crowd Support", "Seating, shelter and crowd care for attendees.", 12_500_000, 7_813, 10_417],
-  ["Compassion and Medical Outreach", "Screening, medication and community feeding.", 10_000_000, 6_250, 8_333],
-  ["Hospitality and Operations", "Guest care, volunteers and programme logistics.", 20_000_000, 12_500, 16_667],
-  ["Publicity and Growth", "Reaching more communities with the invitation.", 2_000_000, 1_250, 1_667],
+  ["Territory Foundation", "", 18_500_000, 11_563, 15_417],
+  ["Worship & Sound Infrastructure", "", 30_000_000, 18_750, 25_000],
+  ["Power & Light Development", "", 25_000_000, 15_625, 20_833],
+  ["Safety & Security", "", 15_000_000, 9_375, 12_500],
+  ["Comfort & Crowd Support", "", 12_500_000, 7_813, 10_417],
+  ["Compassion & Medical Outreach", "", 10_000_000, 6_250, 8_333],
+  ["Hospitality & Programme Operations", "", 20_000_000, 12_500, 16_667],
+  ["Publicity & Programme Growth", "", 2_000_000, 1_250, 1_667],
 ];
 
 async function upload(file: string, alt: string, inGallery: boolean, sortOrder = 0) {
@@ -185,6 +193,7 @@ async function main() {
     "The Gathering 2026 flyer: The Move of the Spirit, 27 to 29 November, with the ministers lineup",
     false,
   );
+  const crowd = await upload(path.join(ORIGINALS, "gathering-crowd.webp"), "A packed hall of worshippers at The Gathering", false);
   const busFlyer = await upload(
     path.join(ORIGINALS, "join-the-bus.jpg"),
     "Join the bus flyer: free buses to and from The Gathering, 27 to 29 November at 8 AM",
@@ -197,16 +206,17 @@ async function main() {
     name: "The Gathering 2026",
     theme: "The Move of the Spirit",
     subtitle: "Breaking Territories",
-    summary: "An annual interdenominational prayer and compassion conference, reaching up to 5,000 people through medical and compassion outreach.",
+    summary: "Annual interdenominational prayer and compassion conference.",
     startsAt: new Date("2026-11-27T08:00:00+01:00"),
     endsAt: new Date("2026-11-29T20:00:00+01:00"),
-    locationLabel: "Ibadan, Oyo State, Nigeria",
+    locationLabel: "Ido, Oyo State, Nigeria",
     venueName: "The Gathering International Christian Centre",
     venueAddress: "Mekun, Elebu Axis, Alao Akala Expressway, Ibadan, Oyo State, Nigeria",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Mekun%2C+Elebu%2C+Alao+Akala+Expressway%2C+Ibadan",
     heroImageId: photos[0].id,
     flyerImageId: flyer.id,
     busFlyerImageId: busFlyer.id,
+    partnerHeroImageId: crowd.id,
     isCurrent: true,
   });
 

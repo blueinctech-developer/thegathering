@@ -29,7 +29,7 @@ export default async function PartnerPage() {
 
   return (
     <>
-      <PageHero label="Partner with us" title={`${site.partnerHeading} in the work`} intro={site.partnerIntro} photo={gallery[8] ?? gallery[0]}>
+      <PageHero label="Partner with us" title={site.partnerHeading} intro={site.partnerIntro} photo={ev?.partnerHero ?? gallery[8] ?? gallery[0]}>
         <a href="#enquire" className="pill pill-ember pill-lg">Send an enquiry</a>
         <a href="#streams" className="pill pill-light pill-lg">Funding streams</a>
       </PageHero>
@@ -106,14 +106,14 @@ export default async function PartnerPage() {
                   ].map(([k, v], i) => (
                     <div key={k}>
                       <dt className="text-sm text-white/60">{k}</dt>
-                      <dd className={`mt-2 text-[clamp(1.9rem,3.4vw,2.75rem)] leading-none tracking-[-0.03em] tabular-nums ${i === 0 ? "text-ember" : ""}`}>{v}</dd>
+                      <dd className={`mt-2 text-[clamp(1.9rem,3.4vw,2.75rem)] leading-none tracking-[-0.03em] tabular-nums ${i === 0 ? "text-gold" : ""}`}>{v}</dd>
                     </div>
                   ))}
                 </dl>
                 {site.fundingNote && <p className="mt-8 text-sm text-white/55">{site.fundingNote}</p>}
               </div>
               {ev?.overviewPdf && (
-                <a href={`/media/${ev.overviewPdf.key}`} download className="pill pill-ember pill-lg self-start">
+                <a href={`/media/${ev.overviewPdf.key}`} download className="pill pill-gold pill-lg self-start">
                   <DownloadSimple size={18} aria-hidden /> Partnership overview
                 </a>
               )}

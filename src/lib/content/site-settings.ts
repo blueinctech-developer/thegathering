@@ -15,18 +15,14 @@ export const siteSettingsSchema = z.object({
     "The Gathering is an annual interdenominational prayer and compassion conference in Ibadan, Oyo State, Nigeria, uniting worship, medical outreach and community care.",
   ),
 
-  heroSummary: str("Three days of prayer, worship and practical compassion in Ibadan, Oyo State. Free to attend, open to all."),
+  heroSummary: str("Annual interdenominational prayer and compassion conference. Reaching up to 5,000 people through medical and compassion outreach."),
 
   introHeading: str("A conference for revival and community transformation"),
-  introBody: str(
-    "The Gathering is an annual interdenominational prayer conference committed to spiritual revival and tangible community transformation. It brings together ministers, families and communities in pursuit of spiritual awakening and practical compassion.\n\nEach year, lives are touched through worship, the Word, healing prayer, community feeding and medical outreach.",
-  ),
+  introBody: str("The Gathering is an annual interdenominational prayer conference committed to spiritual revival and tangible community transformation. In 2026, under the theme The Move of the Spirit, we are expanding our impact, spiritually and practically."),
   belief: str("Prayer must be accompanied by compassion. Worship must be followed by action. Faith must produce impact."),
 
   mission: str("To inspire revival, impart truth, and empower communities, spiritually and practically."),
-  story: str(
-    "The Gathering is more than a conference. It is an annual call to prayer, revival and transformation, bringing together ministers, families and communities in pursuit of spiritual awakening and tangible compassion.\n\nEach year, lives are touched through worship, the Word, healing prayer, community feeding and medical outreach.",
-  ),
+  story: str("The Gathering is more than a conference. It is an annual call to prayer, revival, and transformation, bringing together ministers, families, and communities in pursuit of spiritual awakening and tangible compassion. Each year, lives are touched through worship, the Word, healing prayer, community feeding, and medical outreach."),
   whyHeading: str("Why The Gathering matters"),
   whyBody: str(
     "Across many communities in Nigeria, families face ongoing challenges. For many, opportunities for medical screening, basic medication and community support are rare.\n\nThe Gathering responds to both spiritual and practical needs, creating an atmosphere of prayer while delivering tangible outreach.",
@@ -35,9 +31,7 @@ export const siteSettingsSchema = z.object({
   convenerBio: str(
     "Pastor Yomi Adeboye is the Convener of The Gathering International Christian Network and leads The Chariot of Fire World Outreach (COFWO).",
   ),
-  governanceBody: str(
-    "The Gathering is committed to integrity, accountability and responsible stewardship of every resource entrusted to it. Financial oversight is provided by the leadership team, major expenditure is reviewed and approved internally, and partners receive updates and impact reports after each conference.",
-  ),
+  governanceBody: str("The Gathering is committed to integrity, accountability, and responsible stewardship of all resources. Financial oversight is provided by the leadership team. Major expenditures are reviewed and approved internally. Partners receive updates and impact reports following the event. Documentation supporting key projects is maintained."),
 
   contactEmail: str("thegatheringcof@gmail.com"),
   helpline: str("+234 708 784 7372"),
@@ -50,43 +44,29 @@ export const siteSettingsSchema = z.object({
   registration: str("Registered in the United Kingdom, No. 15843980"),
   parentOrg: str("An arm of The Chariot of Fire World Outreach (COFWO)"),
 
-  busHeading: str("Free buses, to and fro"),
-  busBody: str(
-    "Complimentary buses collect attendees every morning from pick-up points across Ibadan and bring them home after the day's sessions.",
-  ),
-  busFee: str("Free, both ways"),
-  busTime: str("8:00 AM daily"),
+  busHeading: str("Join the bus: free to and fro"),
+  busBody: str("To make attending The Gathering seamless and accessible for everyone, complimentary buses will collect attendees each morning from designated pick-up locations across the city."),
+  busFee: str("100% free, to and fro daily"),
+  busTime: str("8:00 AM daily, 27 to 29 November"),
   busDropoff: str("The Gathering International Christian Network, Mekun, Elebu Axis, Alao Akala Expressway, New Garage, Ibadan"),
 
-  medicalBody: str(
-    "A dedicated medical outreach provides free health screening, consultation and basic medication, delivered by volunteer medical professionals and partners committed to better access to healthcare.",
-  ),
+  medicalBody: str("As part of The Gathering 2026, a dedicated Medical Outreach Programme will provide free health screening, consultation, and basic medication distribution to support community well-being. This outreach is supported by volunteer medical professionals and partners committed to improving access to healthcare in the community."),
   medicalTarget: str("Up to 5,000 people"),
-  compassionBody: str(
-    "The Heart of Compassion initiative provides food and practical support so the most vulnerable families are cared for during and beyond the conference.",
-  ),
-  communityBody: str(
-    "Lasting change comes through engaged families and connected communities walking together in faith.",
-  ),
+  compassionBody: str("Food distribution and practical support for vulnerable families. The Heart of Compassion initiative ensures that the most vulnerable in the community are fed and cared for during and beyond the conference."),
+  communityBody: str("Encouraging unity, faith, and long-term transformation. We believe lasting change comes through engaged families and connected communities walking together in faith."),
 
   landHeading: str("Building a foundation for future generations"),
-  landBody: str(
-    "The Gathering has secured land in Ido Local Government Area, Oyo State. Initial payments have been made and development has begun, with the existing orange tree stands protected and the water tank stand preserved.",
-  ),
+  landBody: str("The Gathering has secured 1 acre of land within a 2.66-acre site in Ido Local Government Area, Oyo State, Nigeria. This is the first phase of land acquisition. Initial payments have been made and development has begun.\n\nThe orange tree stands are protected and the water tank stand is preserved."),
   landSecured: str("1 acre"),
   landSecuredNote: str("Secured in the first phase"),
   landTotal: str("2.66 acres"),
   landTotalNote: str("Total site, about 10,783 m²"),
 
-  partnerHeading: str("Stand with us"),
-  partnerIntro: str(
-    "The Gathering continues to grow in reach and impact. The scale of this work now needs committed partners who share the vision.",
-  ),
+  partnerHeading: str("Stand with us in The Move of the Spirit"),
+  partnerIntro: str("The Gathering continues to grow in impact and reach. The scale of this work now requires the support of committed partners who share the vision."),
   fundingNote: str("Exchange rates are planning estimates."),
-  givingNote: str(
-    "For all giving enquiries, contact our team by email. No bank details or payment links are published on this site.",
-  ),
-  programmeNote: str("The full programme will be confirmed by the ministry team closer to the conference."),
+  givingNote: str("For all giving enquiries, please contact thegatheringcof@gmail.com. No bank details, payment links, or tax relief claims are published on this site."),
+  programmeNote: str("The full programme is to be confirmed and updated by the ministry team."),
 
   videoYoutubeId: str("PnToowvbqxA"),
   videoTitle: str("This year, The Gathering takes place on The Gathering Land"),

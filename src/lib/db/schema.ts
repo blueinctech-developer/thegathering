@@ -115,6 +115,7 @@ export const events = pgTable("events", {
   flyerImageId: integer("flyer_image_id").references(() => media.id, { onDelete: "set null" }),
   busFlyerImageId: integer("bus_flyer_image_id").references(() => media.id, { onDelete: "set null" }),
   overviewPdfId: integer("overview_pdf_id").references(() => media.id, { onDelete: "set null" }),
+  partnerHeroImageId: integer("partner_hero_image_id").references(() => media.id, { onDelete: "set null" }),
   isCurrent: boolean("is_current").notNull().default(true),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });

@@ -6,20 +6,22 @@
   tracking. One brand family: "ember", the warm light of the flame in the logo.
 */
 :root {
-  --canvas: #f9f7f3;
-  --band: #f1eee8;
+  --canvas: #f7f5f2;
+  --band: #efebe7;
   --card: #ffffff;
-  --ink: #121212;
-  --ink-2: #45433f;
-  --ink-3: #74716b;
-  --line: #e4e0d8;
-  --ground: #121212; /* dark feature sections */
+  --ink: #1f1916;
+  --ink-2: #4c4541;
+  --ink-3: #68625e;
+  --line: #dad7d3;
+  --ground: #7c1d1a; /* maroon feature sections */
 
-  --ember: #c8101c; /* COFWO red */
-  --ember-deep: #b00e19; /* text and icons on light */
-  --ember-tint: #fbebe7; /* panel wash */
-  --ember-light: #f6cfc8;
+  --ember: #7c1d1a; /* primary maroon (from the 2026 preview) */
+  --ember-deep: #7c1d1a; /* text and icons on light */
+  --ember-tint: #f4e6e3; /* panel wash */
+  --ember-light: #e8cbc6;
   --on-ember: #ffffff;
+  --gold: #d5a13c; /* highlight on maroon and dark areas */
+  --on-gold: #1f1916;
 
   --stripe: rgb(200 16 28 / 0.09);
   --accent: var(--ember-deep);
@@ -28,19 +30,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --canvas: #0d0d0c;
-    --band: #161514;
-    --card: #1c1b19;
-    --ink: #f4f2ee;
-    --ink-2: #c6c2bb;
-    --ink-3: #8f8b84;
-    --line: #2b2926;
-    --ground: #161514;
-    --ember: #e5262f;
-    --ember-deep: #ff6b6f;
-    --ember-tint: #2a1414;
-    --ember-light: #4a1c1c;
+    --canvas: #141110;
+    --band: #1c1816;
+    --card: #231e1c;
+    --ink: #f5f0eb;
+    --ink-2: #cdc5bf;
+    --ink-3: #968d87;
+    --line: #352e2b;
+    --ground: #5c1613;
+    --ember: #a3302b;
+    --ember-deep: #f19a8f;
+    --ember-tint: #2b1715;
+    --ember-light: #4a2320;
     --on-ember: #ffffff;
+    --gold: #e0b153;
+    --on-gold: #1f1916;
     --stripe: rgb(229 38 47 / 0.12);
     color-scheme: dark;
   }
@@ -60,6 +64,8 @@
   --color-ember-tint: var(--ember-tint);
   --color-ember-light: var(--ember-light);
   --color-on-ember: var(--on-ember);
+  --color-gold: var(--gold);
+  --color-on-gold: var(--on-gold);
 
   /* Aliases used by the admin screens */
   --color-bg: var(--canvas);
@@ -162,6 +168,8 @@
   .pill-ink:hover { box-shadow: 0 10px 24px -10px rgb(18 18 18 / 0.45); }
   .pill-ember { background: var(--ember); color: var(--on-ember); }
   .pill-ember:hover { box-shadow: 0 12px 28px -10px var(--ember); }
+  .pill-gold { background: var(--gold); color: var(--on-gold); }
+  .pill-gold:hover { box-shadow: 0 12px 28px -10px var(--gold); }
   .pill-line { background: transparent; color: var(--ink); border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); }
   .pill-line:hover { border-color: var(--ink); }
   .pill-light { background: rgb(255 255 255 / 0.12); color: #fff; border: 1px solid rgb(255 255 255 / 0.28); }

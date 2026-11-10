@@ -20,7 +20,7 @@ export default async function MinistriesPage() {
         label="Ministries and outreach"
         title="Serving both soul and body"
         photo={photo(6)}
-        intro="The Gathering is a spiritual conference and a programme of community care. Prayer, compassion and practical support go together."
+        intro="The Gathering 2026 is designed not only as a spiritual conference, but as a programme of community transformation. Through prayer, compassion, and practical support, we serve both soul and body."
       />
 
       {/* Medical outreach: the largest programme */}

@@ -62,7 +62,7 @@ export function MobileMenu({
               ))}
             </ul>
           </nav>
-          <Link href={cta.href} className="pill pill-ink pill-lg mt-8 w-full">
+          <Link href={cta.href} className="pill pill-ember pill-lg mt-8 w-full">
             {cta.label}
           </Link>
         </div>

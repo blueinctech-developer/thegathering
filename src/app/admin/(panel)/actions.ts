@@ -89,6 +89,7 @@ export async function saveEvent(_prev: ActionResult, data: FormData): Promise<Ac
       ["flyerImageId", "lineup flyer", false],
       ["busFlyerImageId", "bus flyer", false],
       ["overviewPdfId", "partnership overview", true],
+      ["partnerHeroImageId", "partner page photo", false],
     ] as const) {
       const upload = fd.file(data, `${field}Upload`);
       if (upload) {
@@ -114,6 +115,7 @@ export async function saveEvent(_prev: ActionResult, data: FormData): Promise<Ac
       flyerImageId: ids.flyerImageId,
       busFlyerImageId: ids.busFlyerImageId,
       overviewPdfId: ids.overviewPdfId,
+      partnerHeroImageId: ids.partnerHeroImageId,
       updatedAt: new Date(),
     };
     const id = fd.optId(data, "id");

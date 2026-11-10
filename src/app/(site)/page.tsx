@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Flame, HandHeart, MapPin, Stethoscope } from "@phosphor-icons/react/dist/ssr";
 import { MediaImage } from "@/components/media-image";
+import { ListIcon } from "@/components/icon";
 import { BusSection } from "@/components/site/bus-section";
 import { Countdown } from "@/components/site/countdown";
 import { Accent } from "@/components/site/accent";
@@ -25,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [site, ev, impact, speakers, gallery, expect, medical, landVision, tiers, streams, faqs] = await Promise.all([
+  const [site, ev, impact, speakers, gallery, expect, medical, landVision, tiers, streams, faqs, highlights] = await Promise.all([
     getSite(),
     getEvent(),
     getList("impact"),
@@ -37,16 +38,17 @@ export default async function HomePage() {
     getList("partnerTiers"),
     getFundingStreams(),
     getList("faqs"),
+    getList("highlights"),
   ]);
   const photo = (i: number) => gallery[i] ?? gallery[0] ?? null;
   const totalNgn = streams.reduce((t, s) => t + s.amountNgn, 0);
 
   const experiences = [
-    { label: "Worship and prayer", title: "Three days in the presence of God", img: photo(0) },
-    { label: "Medical outreach", title: `Free care for ${site.medicalTarget.toLowerCase()}`, img: photo(2) },
-    { label: "Heart of Compassion", title: "Food and support for families", img: photo(5) },
-    { label: "Ministry", title: "Anointed teaching and healing", img: photo(10) },
-    { label: "The Gathering Land", title: `${site.landTotal} for future generations`, img: photo(12) },
+    { label: "Worship and prayer", title: "Intercession, revival, healing and restoration", img: photo(0) },
+    { label: "Medical outreach", title: "Free screening and medication for up to 5,000 people", img: photo(2) },
+    { label: "Heart of Compassion", title: "Community feeding for vulnerable families", img: photo(5) },
+    { label: "Ministers and speakers", title: "Ministry from invited speakers and ministers", img: photo(10) },
+    { label: "The Gathering Land", title: "Permanent land development in Ido LGA, Oyo State", img: photo(12) },
   ];
 
   return (
@@ -60,7 +62,7 @@ export default async function HomePage() {
             )}
             <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(0_0_0/0.82)_0%,rgb(0_0_0/0.55)_50%,rgb(0_0_0/0.2)_100%),linear-gradient(180deg,transparent_55%,rgb(0_0_0/0.75)_100%)]" />
             <div className="flex min-h-[calc(100dvh-9rem)] flex-col justify-between gap-12 p-6 sm:p-10 lg:p-14">
-              {ev && <p className="t-label !text-white/85">{ev.name}</p>}
+              {ev && <p className="t-label !text-gold">{ev.name}</p>}
               <div>
                 <h1 className="t-hero max-w-[10ch]">
                   {ev ? <Accent text={ev.theme} period /> : site.siteName}
@@ -135,7 +137,7 @@ export default async function HomePage() {
               icon={<HandHeart size={26} weight="light" />}
               title="Heart of Compassion"
               body={site.compassionBody}
-              points={["Community feeding during the conference", "Practical support for vulnerable families", "Care that continues beyond the three days"]}
+              points={["Food distribution for vulnerable families", "Practical support for those in need", "Care during and beyond the conference"]}
               href="/ministries"
               linkLabel="How we serve"
               img={photo(7)}
@@ -152,6 +154,26 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* At a glance (the preview's six facts) */}
+      {highlights.length > 0 && (
+        <section aria-labelledby="glance-h" className="wrap pt-24 md:pt-32">
+          <SectionHead id="glance-h" title={site.introHeading} intro={site.introBody} />
+          <ul className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {highlights.map((h, i) => (
+              <Reveal as="li" key={h.id} delay={(i % 3) * 0.05} className="card-line flex items-start gap-4 p-6">
+                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-ember-tint text-ember-deep">
+                  <ListIcon name={h.icon} size={22} />
+                </span>
+                <span>
+                  <span className="block text-lg font-semibold tracking-tight">{h.title}</span>
+                  <span className="text-ink-2">{h.body}</span>
+                </span>
+              </Reveal>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* Impact figures */}
       {impact.length > 0 && (
@@ -225,7 +247,7 @@ export default async function HomePage() {
           </div>
           {totalNgn > 0 && (
             <p className="mt-14 text-center">
-              <span className="t-display block tabular-nums text-ember">{money.ngn(totalNgn)}</span>
+              <span className="t-display block tabular-nums text-gold">{money.ngn(totalNgn)}</span>
               <span className="mt-2 block text-white/60">to build, equip and serve at {ev?.name ?? site.siteName}</span>
             </p>
           )}
@@ -240,7 +262,7 @@ export default async function HomePage() {
             </ul>
           )}
           <div className="mt-12 flex flex-wrap justify-center gap-3">
-            <Link href="/partner" className="pill pill-ember pill-lg">Become a partner</Link>
+            <Link href="/partner" className="pill pill-gold pill-lg">Become a partner</Link>
             <Link href="/partner#streams" className="pill pill-light pill-lg">See funding streams</Link>
           </div>
         </div>

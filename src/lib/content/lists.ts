@@ -1,6 +1,7 @@
 /** The editable short lists used across the site, and how the admin should present them. */
 export type ListKey =
   | "pillars"
+  | "highlights"
   | "impact"
   | "expect"
   | "medical"
@@ -23,6 +24,7 @@ export type ListDef = {
 
 export const LISTS: ListDef[] = [
   { key: "pillars", label: "Pillars", where: "Home page, under the hero", titleLabel: "Word", bodyLabel: "Line", icon: true },
+  { key: "highlights", label: "At a glance", where: "Home page", titleLabel: "Fact", bodyLabel: "Detail", icon: true },
   { key: "impact", label: "Impact figures", where: "Home and About", titleLabel: "Figure (e.g. 5,000+)", bodyLabel: "What it counts" },
   { key: "expect", label: "What to expect", where: "The Gathering 2026 page", titleLabel: "Item" },
   { key: "medical", label: "Medical services", where: "Ministries & Outreach", titleLabel: "Service" },

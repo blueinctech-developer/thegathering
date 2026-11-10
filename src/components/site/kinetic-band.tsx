@@ -9,7 +9,7 @@ export function KineticBand({ words }: { words: string[] }) {
         {[...row, ...row].map((w, i) => (
           <span key={i} className="flex items-center gap-10 md:gap-16">
             <span className={`t-kinetic ${i % 2 ? "t-outline" : ""}`}>{w}</span>
-            <span className="inline-block size-4 rotate-45 bg-ember md:size-6" />
+            <span className="inline-block size-4 rotate-45 bg-gold md:size-6" />
           </span>
         ))}
       </div>

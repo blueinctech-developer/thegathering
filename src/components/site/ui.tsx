@@ -75,7 +75,7 @@ export function PageHero({
           <MediaImage media={photo} fill priority sizes="100vw" className="-z-20 object-cover grayscale-[35%]" alt="" />
           <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(0_0_0/0.25)_0%,rgb(0_0_0/0.45)_45%,rgb(0_0_0/0.85)_100%)]" />
           <div className="flex min-h-[min(68vh,40rem)] flex-col justify-end p-6 sm:p-10 lg:p-14">
-            {label && <p className="t-label mb-5 !text-white/80">{label}</p>}
+            {label && <p className="t-label mb-5 !text-gold">{label}</p>}
             <h1 className="t-display max-w-[15ch]">
               <Accent text={title} period />
             </h1>
