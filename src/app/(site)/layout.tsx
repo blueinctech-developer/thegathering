@@ -1,5 +1,6 @@
 import { SiteHeader } from "@/components/site/header";
 import { SiteFooter } from "@/components/site/footer";
+import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { getEvent, getSite } from "@/lib/content/queries";
 import { formatDateRange } from "@/lib/format";
 
@@ -21,6 +22,7 @@ export default async function SiteLayout({ children }: LayoutProps<"/">) {
         {children}
       </main>
       <SiteFooter site={site} eventName={ev?.name} />
+      {site.whatsapp && <WhatsAppButton number={site.whatsapp} />}
     </>
   );
 }

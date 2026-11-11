@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/content/site-settings";
-import { bareUrl, telHref } from "@/lib/format";
+import { bareUrl, telHref, waHref } from "@/lib/format";
 import { NAV, PARTNER_CTA } from "./nav";
 
 export function SiteFooter({ site, eventName }: { site: SiteSettings; eventName?: string }) {
@@ -62,6 +62,13 @@ export function SiteFooter({ site, eventName }: { site: SiteSettings; eventName?
             <ul className="grid gap-2.5 text-sm text-white/65">
               {site.contactEmail && <li><a className="hover:text-white" href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></li>}
               {site.helpline && <li><a className="hover:text-white" href={telHref(site.helpline)}>{site.helpline}</a></li>}
+              {site.whatsapp && (
+                <li>
+                  <a className="hover:text-white" href={waHref(site.whatsapp)} target="_blank" rel="noopener noreferrer">
+                    WhatsApp: {site.whatsapp}
+                  </a>
+                </li>
+              )}
               {site.website && <li><a className="hover:text-white" href={site.website} target="_blank" rel="noopener noreferrer">{bareUrl(site.website)}</a></li>}
               {site.address && <li>{site.address}</li>}
             </ul>
