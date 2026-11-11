@@ -13,6 +13,9 @@ export async function GET() {
     accessKey: Boolean(env.S3_ACCESS_KEY_ID || env.AWS_ACCESS_KEY_ID),
     secretKey: Boolean(env.S3_SECRET_ACCESS_KEY || env.AWS_SECRET_ACCESS_KEY),
     usingBucket,
+    authSecret: Boolean(env.BETTER_AUTH_SECRET),
+    authUrlSet: Boolean(env.BETTER_AUTH_URL),
+    siteUrlSet: Boolean(env.NEXT_PUBLIC_SITE_URL),
   };
   try {
     const [row] = await db.select({ key: media.key }).from(media).limit(1);
