@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { Eye, EyeSlash } from "@phosphor-icons/react";
 import { authClient } from "@/lib/auth-client";
 
 export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,7 +23,13 @@ export function LoginForm() {
     const { error: err } = await authClient.signIn.email({ email, password });
     if (err) {
       setPending(false);
-      setError(err.status === 429 ? "Too many attempts. Please wait a minute and try again." : "That email and password do not match an admin account.");
+      setError(
+        err.status === 429
+          ? "Too many attempts. Please wait a minute and try again."
+          : (err.status ?? 0) >= 500
+            ? "Sign-in is unavailable because of a server problem. Please try again later."
+            : "That email and password do not match an admin account.",
+      );
       return;
     }
     // Full navigation so the new session cookie is sent with the first admin request.
@@ -42,7 +50,24 @@ export function LoginForm() {
       </label>
       <label className="block">
         <span className="field-label">Password</span>
-        <input name="password" type="password" autoComplete="current-password" required className="input" />
+        <span className="relative block">
+          <input
+            name="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            required
+            className="input pr-12"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((v) => !v)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
+            className="absolute inset-y-0 right-0 grid w-12 place-items-center rounded-r-xl text-ink-3 transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ember"
+          >
+            {showPassword ? <EyeSlash size={20} aria-hidden /> : <Eye size={20} aria-hidden />}
+          </button>
+        </span>
       </label>
       <button className="btn btn-primary mt-2 w-full" disabled={pending} aria-busy={pending}>
         {pending ? "Signing in..." : "Sign in"}
